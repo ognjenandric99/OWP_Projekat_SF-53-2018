@@ -7,4 +7,5 @@ public class User {
 	private String password;
 	private UlogeUsera uloga;
 	private Date datumRegistracije;
+	private String status;
 }
