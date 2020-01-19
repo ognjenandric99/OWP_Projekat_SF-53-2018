@@ -8,14 +8,14 @@ public class Film {
 	private String naziv;
 	private String reziser;
 	private String glumci;
-	private Zanr zanr;
+	private ArrayList<Zanr> zanr;
 	private int trajanje;
 	private String distributer;
 	private String zemljaPorekla;
 	private int godinaProizvodnje;
 	private String opis;
 	
-	public Film(int id, String naziv, String reziser, String glumci, Zanr zanr,
+	public Film(int id, String naziv, String reziser, String glumci, ArrayList<Zanr> zanr,
 			int trajanje, String distributer, String zemljaPorekla,
 			int godinaProizvodnje, String opis) {
 		super();
@@ -63,11 +63,11 @@ public class Film {
 		this.glumci = glumci;
 	}
 
-	public Zanr getZanr() {
+	public ArrayList<Zanr> getZanr() {
 		return zanr;
 	}
 
-	public void setZanr(Zanr zanr) {
+	public void setZanr(ArrayList<Zanr> zanr) {
 		this.zanr = zanr;
 	}
 
