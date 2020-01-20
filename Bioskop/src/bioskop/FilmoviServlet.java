@@ -1,6 +1,7 @@
 package bioskop;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,11 +30,11 @@ public class FilmoviServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-    private JSONObject ucitajFilm(HttpServletRequest request,HttpServletResponse response){
-    	String idFilma = request.getParameter("filmID");
+    private JSONObject ucitajFilm(String idFilma){
     	Boolean status = false;
     	Film film = null;
 		try {
+			System.out.println(idFilma);
 			film = FilmoviDAO.getFilm(idFilma);
 			status = true;
 			
@@ -59,12 +60,14 @@ public class FilmoviServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		PrintWriter out = response.getWriter();
 		String action = request.getParameter("action");
-		System.out.println(action);
+		String filmID = request.getParameter("filmID");
 		Boolean status = false;
+		
 		switch (action) {
 		case "ucitajFilm":
-			System.out.println(ucitajFilm(request, response));
+			out.print(ucitajFilm(filmID));
 			break;
 
 		default:

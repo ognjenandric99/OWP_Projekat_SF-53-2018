@@ -49,8 +49,13 @@ public class FilmoviDAO {
 						System.out.println("Puklo kod unosa zanra - "+e);
 					}
 				}
+				System.out.println("Vraceno 1 redova");
+				return new Film(ID, Naziv, Reziser, Glumci, Zanrovi_n, Trajanje, Distributer, Zemlja_Porekla, Godina_Proizvodnje, Opis);			
+			}
+			else {
+				System.out.println("Vraceno 0 redova");
+			}
 
-				return new Film(ID, Naziv, Reziser, Glumci, Zanrovi_n, Trajanje, Distributer, Zemlja_Porekla, Godina_Proizvodnje, Opis);			}
 		} finally {
 			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
 			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
