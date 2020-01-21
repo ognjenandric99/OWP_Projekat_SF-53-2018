@@ -14,8 +14,8 @@ public class ConnectionManager {
 	private static final String DATABASE_NAME = "Bioskop.db";
 
 	private static final String FILE_SEPARATOR = System.getProperty("file.separator");
-	private static final String WINDOWS_PATH = "C:" + FILE_SEPARATOR + "Users" + FILE_SEPARATOR + "BUDI" + FILE_SEPARATOR +"git"+FILE_SEPARATOR+"OWP_Projekat_SF-53-2018"+FILE_SEPARATOR+"Bioskop"+FILE_SEPARATOR+"sql"+ DATABASE_NAME;
-	private static final String WINDOWS_PATH_KOMP = "C:" + FILE_SEPARATOR + "Users" + FILE_SEPARATOR + "ognje" + FILE_SEPARATOR +"git"+FILE_SEPARATOR+"OWP_Projekat_SF-53-2018"+FILE_SEPARATOR+"Bioskop"+FILE_SEPARATOR+"sql"+ DATABASE_NAME;
+	private static final String WINDOWS_PATH = "C:" + FILE_SEPARATOR + "Users" + FILE_SEPARATOR + "BUDI" + FILE_SEPARATOR +"git"+FILE_SEPARATOR+"OWP_Projekat_SF-53-2018"+FILE_SEPARATOR+"Bioskop"+FILE_SEPARATOR+"sql"+FILE_SEPARATOR+ DATABASE_NAME;
+	private static final String WINDOWS_PATH_KOMP = "C:" + FILE_SEPARATOR + "Users" + FILE_SEPARATOR + "ognje" + FILE_SEPARATOR +"git"+FILE_SEPARATOR+"OWP_Projekat_SF-53-2018"+FILE_SEPARATOR+"Bioskop"+FILE_SEPARATOR+"sql"+FILE_SEPARATOR+ DATABASE_NAME;
 
 	private static final String LINUX_PATH = "SQLite" + FILE_SEPARATOR + DATABASE_NAME;
 
@@ -38,8 +38,10 @@ public class ConnectionManager {
 
 	public static Connection getConnection() {
 		try {
+			System.out.println("Pokusao sam");
 			return dataSource.getConnection(); // slobodna konekcija se vadi iz pool-a na zahtev
 		} catch (Exception ex) {
+			System.out.println("Nisam uspeo");
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 		}

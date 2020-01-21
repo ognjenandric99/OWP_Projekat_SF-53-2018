@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS Projekcije;
 DROP TABLE IF EXISTS Sale;
 DROP TABLE IF EXISTS Sedista;
 DROP TABLE IF EXISTS Tipovi_Projekcija;
+DROP TABLE IF EXISTS Zanrovi;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,9 +30,10 @@ CREATE TABLE `Filmovi` (
   `Zanrovi` varchar(2555) COLLATE utf8_unicode_ci DEFAULT NULL,
   `Trajanje` int(255) NOT NULL,
   `Distributer` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `Zemlja_Porekla` int(255) NOT NULL,
+  `Zemlja_Porekla` varchar(255) NOT NULL,
   `Godina_Proizvodnje` int(4) NOT NULL,
-  `Opis` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
+  `Opis` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `Status` varchar(255) COLLATE utf8_unicode_ci DEFAULT "Active"
 );
 
 -- --------------------------------------------------------
@@ -113,4 +115,16 @@ CREATE TABLE `Users` (
   `Uloga` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 );
 
-INSERT INTO Filmovi(Naziv,Reziser,Glumci,Zanrovi,Trajanje,Distributer,Zemlja_Porekla,Godina_Proizvodnje,Opis) VALUES("RED","Robert Chventele","Bruce Willis;Morgan F;","Akcija;Avantura",150,"Delta Video","Amerika",2010,"Agent u penziji.");
+CREATE TABLE `Zanrovi` (
+  `ID` integer PRIMARY KEY,
+  `Zanr` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+);
+INSERT INTO Zanrovi(Zanr) VALUES ("Akcija");INSERT INTO Zanrovi(Zanr) VALUES ("Avantura");
+INSERT INTO Zanrovi(Zanr) VALUES ("Animacija");INSERT INTO Zanrovi(Zanr) VALUES ("Biografski");
+INSERT INTO Zanrovi(Zanr) VALUES ("Western");INSERT INTO Zanrovi(Zanr) VALUES ("Komedija");
+INSERT INTO Zanrovi(Zanr) VALUES ("Kriminalisticki");INSERT INTO Zanrovi(Zanr) VALUES ("Deciji");
+INSERT INTO Zanrovi(Zanr) VALUES ("Porodicni");INSERT INTO Zanrovi(Zanr) VALUES ("Tragicni");
+INSERT INTO Zanrovi(Zanr) VALUES ("Fantastika");INSERT INTO Zanrovi(Zanr) VALUES ("NeunesenZanr");
+INSERT INTO Filmovi(Naziv,Reziser,Glumci,Zanrovi,Trajanje,Distributer,Zemlja_Porekla,Godina_Proizvodnje,Opis) VALUES("Rudolf","Deda Mraz","Irvas Rudolf","Animacija;Avantura;Deciji",115,"DedaMraz","Severni Pol",1996,"Irvas rudolf istrazuje severni pol.");
+INSERT INTO Filmovi(Naziv,Reziser,Glumci,Zanrovi,Trajanje,Distributer,Zemlja_Porekla,Godina_Proizvodnje,Opis) VALUES("RED","Robert Chventele","Bruce Willis;Morgan F","Akcija;Avantura",150,"Delta Video","Amerika",2010,"Agent u penziji.");
+INSERT INTO Filmovi(Naziv,Reziser,Glumci,Zanrovi,Trajanje,Distributer,Zemlja_Porekla,Godina_Proizvodnje,Opis) VALUES("Drzavni Posao","","Dragan Torbica;Dordje Cvarkov;Boskic","Western;Komedija",9999,"RTV Vojvodina","Vojvodina",2014,"Arhivsko odeljenje drzavne firme.");

@@ -19,4 +19,7 @@
     <servlet-name>FilmoviServlet</servlet-name>
     <url-pattern>/FilmoviServlet</url-pattern>
   </servlet-mapping>
+  <listener>
+    <listener-class>bioskop.InitListener</listener-class>
+  </listener>
 </web-app>

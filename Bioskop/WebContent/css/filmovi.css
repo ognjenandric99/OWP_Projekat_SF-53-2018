@@ -1,0 +1,48 @@
+#tabelaFilm{
+  background-color: rgba(255,200,100,0.4);
+  border: 2px solid black;
+  border-radius: 5px;
+  text-align: center;
+}
+#tabelaFilm th,#tabelaFilm td{
+  padding: 10px;
+}
+th{
+  font-size: 22px;
+}
+tr{
+	transition:0.5s all ease;
+	cursor:pointer;
+}
+tr:hover{
+	background-color:grey;
+}
+tr:first-child{
+  background-color: #2b2b28;
+}
+.editMovie::after{
+	content:"Izmena";
+	background-color:yellow;
+	display: block;
+	top:0;
+	left:0;
+  border-radius:10px;
+  padding:5px;
+  cursor:pointer;
+}
+.deleteMovie::after{
+	content:"Obrisi";
+	background-color:crimson;
+	display: block;
+	top:0;
+	left:0;
+  border-radius:10px;
+  padding:5px;
+  cursor:pointer;
+}
+.movie_name{
+	font-size: 22px;
+    text-decoration: underline;
+    font-weight: 600;
+    color:blue;
+}

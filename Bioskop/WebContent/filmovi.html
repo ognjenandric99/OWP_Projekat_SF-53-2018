@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Insert title here</title>
+<script src="./js/jquery-3.3.1.js"></script>
+<link rel="stylesheet" href="./css/filmovi.css">
+</head>
+<body>
+  <a href="index.html"> <p>Nazad</p> </a>
+  <a href="korisnici.html"> <p>Korisnici</p> </a>
+  <a href="registracija.html"> <p>Registracija</p> </a>
+
+  <h1>Filmovi</h1>
+
+  <table id="tabelaFilm">
+  	<tr>
+  		<th></th>
+  		<th> <input id="f_naziv"/> </th>
+  		<th> <input id="f_trajanje" type="number"/> </th>
+  		<th> <select id="f_zanrovi" multiple></select></th>
+  		<th> <input id="f_opis"/> </th>
+  		<th> <input id="f_glumci"/> </th>
+  		<th> <input id="f_reziser"/> </th>
+  		<th> <input id="f_godina" type="number"/> </th>
+  		<th> <input id="f_distributer"/> </th>
+  		<th> <input id="f_zemlja"/> </th>
+  		<th> <button id="filterBtnFilm">Filtriraj</button> </th>
+  	</tr>
+    <tr>
+      <th>ID</th>
+      <th>Naziv</th>
+      <th>Trajanje</th>
+      <th>Zanrovi</th>
+      <th>Opis</th>
+      <th>Glumci</th>
+      <th>Reziser</th>
+      <th>Godina Proizvodnje</th>
+      <th>Distributer</th>
+      <th>Zemlja Porekla</th>
+    </tr>
+  </table>
+  
+  <p id="errorMsg"></p>
+  
+  <h3>Dodajte film</h3>
+  <label>Naziv : </label><input id="am_naziv" required/><br>
+  <label>Trajanje : </label><input id="am_trajanje" type="number" required/><br>
+  <label>Zanr : </label><select id="zanroviDropdown" multiple></select><br>
+  <label>Opis : </label><input id="am_opis"/><br>
+  <label>Glumci : </label><input id="am_glumci"/><br>
+  <label>Reziser : </label><input id="am_reziser"/><br>
+  <label>Godina Proizvodnje : </label><input id="am_godinaProizvodnje" required/><br>
+  <label>Distributer : </label><input id="am_distributer" required/><br>
+  <label>Zemlja Porekla : </label><input id="am_zemljaPorekla" required/><br>
+  <button id="dodajFilmbtn">Dodaj novi film</button>
+  
+  
+ <script src="./js/film.js"></script>
+</body>
+</html>
