@@ -12,6 +12,9 @@
 		cursor:pointer
 	}
 </style>
+<link rel="stylesheet" href="./css/bootstrap-4.3.1-dist/css/bootstrap.css">
+<script src="./css/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
+<script src="./js/w3.js"></script>
 </head>
 <body>
   <a href="index.html"> <p>Nazad</p> </a>
@@ -21,10 +24,17 @@
   
 <table id="korisniciTabela">
 	<tr>
-		<th>Username</th>
-		<th>Password</th>
-		<th>Datum Registracije</th>
-		<th>Tip Accounta</th>
+		<td> <input id="UsernameFilter" /> </td>
+		<td> <input id="PasswordFilter" /> </td>
+		<td> <input id="Datum" type="date"/> </td>
+		<td> <input id="Tip" /> </td>
+		<td> <button id="korisnici_filter">Filtriraj</button> </td>
+	</tr>
+	<tr>
+		<th onclick="w3.sortHTML('#korisniciTabela','.item', 'td:nth-child(1)')">Username</th>
+		<th onclick="w3.sortHTML('#korisniciTabela','.item', 'td:nth-child(2)')">Password</th>
+		<th onclick="w3.sortHTML('#korisniciTabela','.item', 'td:nth-child(3)')">Datum Registracije</th>
+		<th onclick="w3.sortHTML('#korisniciTabela','.item', 'td:nth-child(4)')">Tip Accounta</th>
 	</tr>
 </table>
 <script src="./js/korisnici.js"></script>

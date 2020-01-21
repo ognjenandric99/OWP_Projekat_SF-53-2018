@@ -11,7 +11,17 @@ var id1 = url.searchParams.get("id");
 			var odg = JSON.parse(data);
 			console.log(odg);
 			if(odg.status){
-				console.log(data);
+				var t = document.getElementById('korisniciTabela');
+				var k = odg.korisnik;
+				var r = document.createElement('tr');
+				r.innerHTML="<td data-id='"+k.ID+"' class='usernamelink'>"+k.Username+"</td><td>"+k.Password+"</td><td>"+k.Datum+"</td><td>"+k.Uloga+"</td>";
+				t.appendChild(r);
+				$('.usernamelink').on('click',function(){
+					window.location.href="prikazKorisnika.html?id="+this.getAttribute('data-id');
+				})
+			}
+			else{
+				alert("Nema rezultata.");
 			}
 			
 	});

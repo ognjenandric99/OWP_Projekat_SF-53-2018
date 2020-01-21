@@ -4,6 +4,7 @@
 <title>Insert title here</title>
 <script src="./js/jquery-3.3.1.js"></script>
 <link rel="stylesheet" href="./css/filmovi.css">
+<script src="./js/w3.js"></script>
 </head>
 <body>
   <a href="index.html"> <p>Nazad</p> </a>
@@ -27,16 +28,16 @@
   		<th> <button id="filterBtnFilm">Filtriraj</button> </th>
   	</tr>
     <tr>
-      <th>ID</th>
-      <th>Naziv</th>
-      <th>Trajanje</th>
-      <th>Zanrovi</th>
-      <th>Opis</th>
-      <th>Glumci</th>
-      <th>Reziser</th>
-      <th>Godina Proizvodnje</th>
-      <th>Distributer</th>
-      <th>Zemlja Porekla</th>
+      <th onclick="w3.sortHTML('#tabelaFilm','.item', 'td:nth-child(1)')">ID</th>
+      <th onclick="w3.sortHTML('#tabelaFilm','.item', 'td:nth-child(2)')">Naziv</th>
+      <th onclick="w3.sortHTML('#tabelaFilm','.item', 'td:nth-child(3)')">Trajanje</th>
+      <th onclick="w3.sortHTML('#tabelaFilm','.item', 'td:nth-child(4)')">Zanrovi</th>
+      <th onclick="w3.sortHTML('#tabelaFilm','.item', 'td:nth-child(5)')">Opis</th>
+      <th onclick="w3.sortHTML('#tabelaFilm','.item', 'td:nth-child(6)')">Glumci</th>
+      <th onclick="w3.sortHTML('#tabelaFilm','.item', 'td:nth-child(7)')">Reziser</th>
+      <th onclick="w3.sortHTML('#tabelaFilm','.item', 'td:nth-child(8)')">Godina Proizvodnje</th>
+      <th onclick="w3.sortHTML('#tabelaFilm','.item', 'td:nth-child(9)')">Distributer</th>
+      <th onclick="w3.sortHTML('#tabelaFilm','.item', 'td:nth-child(10)')">Zemlja Porekla</th>
     </tr>
   </table>
   

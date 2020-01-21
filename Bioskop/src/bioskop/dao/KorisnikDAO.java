@@ -105,26 +105,30 @@ public class KorisnikDAO {
 	
 	public static JSONObject ucitajKorisnika(String id) {
 		JSONObject odg = new JSONObject();
-		
-		boolean status = false;
+		JSONObject korisnik = null;
 		
 		Connection conn = ConnectionManager.getConnection();
 		System.out.println(conn);
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
+		
+		boolean status = false;
 		try {
 			System.out.println("Uslo je ovdexxx");
-			String query = "SELECT ID,Username,Password,DatumRegistracije,Uloga WHERE ID= ?";
+			String query = "SELECT ID, Username,Password,DatumRegistracije,Uloga FROM Users"
+					+ " WHERE ID = ?";
 
 			System.out.println(query);
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, id);
-			System.out.println(pstmt);
+			pstmt.setString(1,id);
+			System.out.println(pstmt.toString());
 
 			rset = pstmt.executeQuery();
-			System.out.println(rset);
+			System.out.println(rset.toString());
+			
 			if (rset.next()) {
-				System.out.println("Uslo je ovde23");
+				status = true;
+				System.out.println("Uslo je ovde - Load jednog korisnika");
 				int index = 1;
 				String ID = rset.getString(index++);
 				String Username = rset.getString(index++);
@@ -132,39 +136,38 @@ public class KorisnikDAO {
 				String Datum = rset.getString(index++);
 				String Uloga = rset.getString(index++);
 				
-			
+				
+				//Sredjivanje za pravljenje objekta
+				
+				System.out.println("Pre pravljenja");
+				
 				DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 				Date ddatum = format.parse(Datum);
 				
-				
+				User user = new User(ID, Username, Password, bioskop.model.UlogeUsera.valueOf(Uloga), ddatum, "Active");
 				JSONObject obj = new JSONObject();
-				obj.put("ID",ID);
-				obj.put("Username",Username);
-				obj.put("Password",Password);
-				obj.put("Datum",Datum);
-				obj.put("Uloga",Uloga);
-				
-				odg.put("korisnik", obj);
-				status = true;
-				odg.put("status",status);
+				obj.put("ID",user.getID());
+				obj.put("Username",user.getUsername());
+				obj.put("Password",user.getPassword());
+				obj.put("Datum",format.format(user.getDatumRegistracije()));
+				obj.put("Uloga",user.getUloga().toString());
+				korisnik = obj;
 			}
 			else {
-				
-				odg.put("korisnik", null);
-				odg.put("status",status);
-				System.out.println("Vraceno 0 redova");
+				System.out.println(" vraceno 0 redova");
 			}
-
-		}
-		catch(Exception e) {
+			odg.put("status",status);
+			odg.put("korisnik",korisnik);
 			
-		}
-		finally {
-			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
-			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
-			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
-		}
+	}
+	catch(Exception e) {
 		
+	}
+	finally {
+		try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+	}
 		return odg;
 	}
 	

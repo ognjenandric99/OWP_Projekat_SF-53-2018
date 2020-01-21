@@ -24,6 +24,7 @@ var params = {
 				var film1 = odg.filmovi[i];
 				var f = document.getElementById('tabelaFilm');
 				var tr = document.createElement('tr');
+				tr.className="item";
 				tr.setAttribute('data-FilmID',film1.ID);
 				tr.innerHTML = "<td>"+film1.ID+"</td><td class='movie_name' data-filmid='"+film1.ID+"'>"+film1.Naziv+"</td><td>"+film1.Trajanje+"</td><td>"+film1.Zanrovi+"</td><td>"+film1.Opis+"</td><td>"+film1.Glumci+"</td><td>"+film1.Reziser+"</td><td>"+film1.Godina_Proizvodnje+"</td><td>"+film1.Distributer+"</td><td>"+film1.Zemlja_Porekla+"</td><td><span class='editMovie' data-movieID='"+film1.ID+"'></span><span class='deleteMovie' data-movieID='"+film1.ID+"'></span></td>";
 				f.appendChild(tr);
@@ -173,6 +174,7 @@ $("#filterBtnFilm").on("click",function(){
 							var film1 = odg.filmovi[i];
 							var f = document.getElementById('tabelaFilm');
 							var tr = document.createElement('tr');
+							tr.className="item";
 							tr.setAttribute('data-FilmID',film1.ID);
 							tr.innerHTML = "<td>"+film1.ID+"</td><td class='movie_name' data-filmid='"+film1.ID+"'>"+film1.Naziv+"</td><td>"+film1.Trajanje+"</td><td>"+film1.Zanrovi+"</td><td>"+film1.Opis+"</td><td>"+film1.Glumci+"</td><td>"+film1.Reziser+"</td><td>"+film1.Godina_Proizvodnje+"</td><td>"+film1.Distributer+"</td><td>"+film1.Zemlja_Porekla+"</td><td><span class='editMovie' data-movieID='"+film1.ID+"'></span><span class='deleteMovie' data-movieID='"+film1.ID+"'></span></td>";
 							f.appendChild(tr);
