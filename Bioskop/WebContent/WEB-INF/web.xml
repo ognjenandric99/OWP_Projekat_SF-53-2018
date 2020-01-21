@@ -22,4 +22,14 @@
   <listener>
     <listener-class>bioskop.InitListener</listener-class>
   </listener>
+  <servlet>
+    <description></description>
+    <display-name>KorisnikServlet</display-name>
+    <servlet-name>KorisnikServlet</servlet-name>
+    <servlet-class>bioskop.KorisnikServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>KorisnikServlet</servlet-name>
+    <url-pattern>/KorisnikServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

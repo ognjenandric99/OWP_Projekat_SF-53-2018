@@ -111,7 +111,7 @@ CREATE TABLE `Users` (
   `ID` integer PRIMARY KEY,
   `Username` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `DatumRegistracije` date NOT NULL,
+  `DatumRegistracije` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `Uloga` varchar(255) COLLATE utf8_unicode_ci NOT NULL
 );
 
