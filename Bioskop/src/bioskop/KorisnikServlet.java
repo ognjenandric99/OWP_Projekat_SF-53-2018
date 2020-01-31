@@ -61,6 +61,11 @@ public class KorisnikServlet extends HttpServlet {
 	   odg = KorisnikDAO.ucitajSveKorisnike(username,password,datum,tip);
 	   return odg;
    }
+   private boolean login(HttpServletRequest request) {
+	   JSONObject odg = KorisnikDAO.login(request);
+	   System.out.println(odg.get("status"));
+	   return false;
+   }
    
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -89,7 +94,8 @@ public class KorisnikServlet extends HttpServlet {
 		case "filter":
 			out.print(ucitajFilter(request));
 			break;
-		
+		case "login":
+			out.print(login(request));
 		default:
 			break;
 		}

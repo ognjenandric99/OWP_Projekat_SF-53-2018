@@ -3,12 +3,21 @@
 <head>
 <title>Registracija</title>
 <script src="./js/jquery-3.3.1.js"></script>
+<link rel="stylesheet" href="./css/bootstrap-4.3.1-dist/css/bootstrap.css">
+<link rel="stylesheet" href="./css/main.css">
+<script src="./js/main.js"></script>
+<script src="./css/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
 </head>
 <body>
-<label>Username : </label><input id="r_username" required /><br>
-<label>Password : </label><input id="r_pass1" required type="password"/><br>
-<label>Confirm Password : </label><input id="r_pass2" required type="password"/><br>
-<button id="registracija">Registruj se</button>
+<div id="notificationdiv"></div>
+<div class="col-sm-4 margin0 talcen logregdiv">
+	<label>Username : </label><br><input id="r_username" required /><br>
+	<label>Password : </label><br><input id="r_pass1" required type="password"/><br>
+	<label>Confirm Password : </label><br><input id="r_pass2" required type="password"/><br>
+	<button id="registracija" class="confirmbtn margin10">Registruj se</button><br>
+	<p class="talcen margin0"> <a href="login.html">Login</a> </p>
+</div>
+
 <script src="./js/registracija.js"></script>
 </body>
 </html>

@@ -18,6 +18,63 @@ import bioskop.model.Zanr;
 import bioskop.model.UlogeUsera;
 
 public class KorisnikDAO {
+	
+	public static JSONObject login(HttpServletRequest request) {
+		JSONObject odg = new JSONObject();
+		boolean status = false;
+		User user = null;
+		
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		
+		try {
+			
+			Connection conn = ConnectionManager.getConnection();
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+				String query = "SELECT ID, Username,Password,DatumRegistracije,Uloga,Status FROM Users WHERE Username='?' AND Password='?'";
+				
+				pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, username);
+				pstmt.setString(2, password);
+				System.out.println(pstmt);
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()) {
+					System.out.println("DA");
+					int index = 1;
+					String ID = rset.getString(index++);
+					String Username = rset.getString(index++);
+					String Password = rset.getString(index++);
+					String Datum = rset.getString(index++);
+					String Uloga = rset.getString(index++);
+					String Status = rset.getString(index++);
+					
+					//Sredjivanje za pravljenje objekta
+					
+					System.out.println("Pre pravljenja");
+					
+					DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+					Date ddatum = format.parse(Datum);
+					
+					if(Status.equalsIgnoreCase("active")) {
+						status = true;
+						user = new User(ID, Username, Password, bioskop.model.UlogeUsera.valueOf(Uloga), ddatum, Status);
+					}
+				}
+				else {
+					
+				}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		odg.put("status", status);
+		odg.put("korisnik", user);
+		return odg;
+	}
+	
 	public static JSONObject registracija(HttpServletRequest request) {
 		JSONObject odg = new JSONObject();
 		 
@@ -34,7 +91,7 @@ public class KorisnikDAO {
 			 Connection conn = ConnectionManager.getConnection();
 				PreparedStatement pstmt = null;
 				try {
-					String query = "INSERT INTO Users(Username,Password,DatumRegistracije,Uloga) VALUES (?,?,?,'obicanKorisnik')";
+					String query = "INSERT INTO Users(Username,Password,DatumRegistracije,Uloga,Status) VALUES (?,?,?,'obicanKorisnik','Active')";
 
 					System.out.println(query);
 					pstmt = conn.prepareStatement(query);
@@ -135,7 +192,7 @@ public class KorisnikDAO {
 				String Password = rset.getString(index++);
 				String Datum = rset.getString(index++);
 				String Uloga = rset.getString(index++);
-				
+				String Status = rset.getString(index++);
 				
 				//Sredjivanje za pravljenje objekta
 				
@@ -144,7 +201,7 @@ public class KorisnikDAO {
 				DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 				Date ddatum = format.parse(Datum);
 				
-				User user = new User(ID, Username, Password, bioskop.model.UlogeUsera.valueOf(Uloga), ddatum, "Active");
+				User user = new User(ID, Username, Password, bioskop.model.UlogeUsera.valueOf(Uloga), ddatum, Status);
 				JSONObject obj = new JSONObject();
 				obj.put("ID",user.getID());
 				obj.put("Username",user.getUsername());

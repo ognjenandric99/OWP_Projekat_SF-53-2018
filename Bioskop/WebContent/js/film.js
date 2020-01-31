@@ -26,7 +26,7 @@ var params = {
 				var tr = document.createElement('tr');
 				tr.className="item";
 				tr.setAttribute('data-FilmID',film1.ID);
-				tr.innerHTML = "<td>"+film1.ID+"</td><td class='movie_name' data-filmid='"+film1.ID+"'>"+film1.Naziv+"</td><td>"+film1.Trajanje+"</td><td>"+film1.Zanrovi+"</td><td>"+film1.Opis+"</td><td>"+film1.Glumci+"</td><td>"+film1.Reziser+"</td><td>"+film1.Godina_Proizvodnje+"</td><td>"+film1.Distributer+"</td><td>"+film1.Zemlja_Porekla+"</td><td><span class='editMovie' data-movieID='"+film1.ID+"'></span><span class='deleteMovie' data-movieID='"+film1.ID+"'></span></td>";
+				tr.innerHTML = "<td class='movie_name' data-filmid='"+film1.ID+"'>"+film1.Naziv+"</td><td>"+film1.Trajanje+"</td><td>"+film1.Zanrovi+"</td><td>"+film1.Godina_Proizvodnje+"</td><td>"+film1.Distributer+"</td><td>"+film1.Zemlja_Porekla+"</td><td><span class='editMovie' data-movieID='"+film1.ID+"'></span><span class='deleteMovie' data-movieID='"+film1.ID+"'></span></td>";
 				f.appendChild(tr);
 			}
 			$(".movie_name").on("click", function(){
@@ -137,27 +137,21 @@ $("#filterBtnFilm").on("click",function(){
 	var naziv1 = $("#f_naziv").val();
 	var trajanje1 = $("#f_trajanje").val();
 	var zanr1 = $("#f_zanrovi").val();
-	var opis1 = $("#f_opis").val();
-	var glumci1 = $("#f_glumci").val();
-	var reziser1 = $("#f_reziser").val();
 	var godina1 = $("#f_godina").val();
 	var distributer1 = $("#f_distributer").val();
 	var zemlja1 = $("#f_zemlja").val();
 	
 	zanr1.sort();
 	zanr1 = zanr1.join(";");
-	glumci1 = glumci1.split(",");
-	glumci1.sort();
-	glumci1 = glumci1.join(";");
 	
 		var params = {
 				action: "filterFilm",
 				naziv:naziv1,
 				trajanje:trajanje1,
 				zanr:zanr1,
-				opis:opis1,
-				glumci:glumci1,
-				reziser:reziser1,
+				opis:"",
+				glumci:"",
+				reziser:"",
 				godina:godina1,
 				distributer:distributer1,
 				zemlja:zemlja1
@@ -176,7 +170,7 @@ $("#filterBtnFilm").on("click",function(){
 							var tr = document.createElement('tr');
 							tr.className="item";
 							tr.setAttribute('data-FilmID',film1.ID);
-							tr.innerHTML = "<td>"+film1.ID+"</td><td class='movie_name' data-filmid='"+film1.ID+"'>"+film1.Naziv+"</td><td>"+film1.Trajanje+"</td><td>"+film1.Zanrovi+"</td><td>"+film1.Opis+"</td><td>"+film1.Glumci+"</td><td>"+film1.Reziser+"</td><td>"+film1.Godina_Proizvodnje+"</td><td>"+film1.Distributer+"</td><td>"+film1.Zemlja_Porekla+"</td><td><span class='editMovie' data-movieID='"+film1.ID+"'></span><span class='deleteMovie' data-movieID='"+film1.ID+"'></span></td>";
+							tr.innerHTML = "<td class='movie_name' data-filmid='"+film1.ID+"'>"+film1.Naziv+"</td><td>"+film1.Trajanje+"</td><td>"+film1.Zanrovi+"</td><td>"+film1.Godina_Proizvodnje+"</td><td>"+film1.Distributer+"</td><td>"+film1.Zemlja_Porekla+"</td><td><span class='editMovie' data-movieID='"+film1.ID+"'></span><span class='deleteMovie' data-movieID='"+film1.ID+"'></span></td>";
 							f.appendChild(tr);
 						}
 						$(".movie_name").on("click", function(){
