@@ -1,7 +1,7 @@
 $("#loginbtn").on('click',function(){
 	var user = $("#l_username").val();
 	var pass1 = $("#l_pass").val();
-	
+
 	if(user.length>0 && pass1.length>0){
 		var params = {
 				action: "login",
@@ -16,9 +16,9 @@ $("#loginbtn").on('click',function(){
 					window.location.href="index.html";
 				}
 				else{
-					alert("Ne postoji korisnik sa tim podacima. Molimo Vas da pokusate ponovo.");
+					pushNotification("red",odg.message);
 				}
-				
+
 		});
 	}
 	else{

@@ -42,6 +42,7 @@ public class KorisnikDAO {
 	}
 	public static JSONObject login(HttpServletRequest request) {
 		JSONObject odg = new JSONObject();
+		String message = "Unexpected error";
 		boolean status = false;
 		User user = null;
 		JSONObject korisnik = null;
@@ -86,9 +87,10 @@ public class KorisnikDAO {
 					request.getSession().setAttribute("username", user.getUsername());
 					request.getSession().setAttribute("uloga", user.getUloga().toString());
 					request.getSession().setAttribute("status", user.getStatus());
+					message = "Uspesno ste se loginovali.";
 				}
 				else {
-					
+					message = "Molimo Vas da proverite tacnost podataka.";
 				}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -96,6 +98,7 @@ public class KorisnikDAO {
 		
 		odg.put("status", status);
 		odg.put("korisnik", korisnik);
+		odg.put("message",message);
 		return odg;
 	}
 	public static JSONObject logOut(HttpServletRequest request) {
@@ -122,6 +125,7 @@ public class KorisnikDAO {
 		String message = "uncaught error";
 		 String username = request.getParameter("username");
 		 String password = request.getParameter("password");
+		 System.out.println(username+"|"+password);
 		 if(username.length()==0 || password.length()==0) {
 			 odg.put("status",false);
 			 message = "Unos je prekratak!";
@@ -177,32 +181,36 @@ public class KorisnikDAO {
 		 }
 	}
 	public static boolean postojiUser(String username) {
+		Boolean status  = true;
+		
 		Connection conn = ConnectionManager.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		boolean status = false;
+		
 		try {
-			String query = "SELECT ID,Username,Password,DatumRegistracije,Uloga FROM Users WHERE Username='?'";
+			String query = "SELECT ID,Username,Password,DatumRegistracije,Uloga,Status FROM Users"
+					+ " WHERE Username = ?";
 
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, username);
+			pstmt.setString(1,username);
 
 			rset = pstmt.executeQuery();
-			if (rset.next()) {
-				status = true;
-				try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
-			}
-			else {
+			
+			if (!rset.next()) {
+				status = false;
 			}
 
-		}
-		catch(Exception e) {
+
 			
-		}
-		finally {
-			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
-			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
-		}
+	}
+	catch(Exception e) {
+		
+	}
+	finally {
+		try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+		try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+	}
 		return status;
 		
 	}
@@ -217,7 +225,7 @@ public class KorisnikDAO {
 		
 		boolean status = false;
 		try {
-			String query = "SELECT ID, Username,Password,DatumRegistracije,Uloga FROM Users"
+			String query = "SELECT ID, Username,Password,DatumRegistracije,Uloga,Status FROM Users"
 					+ " WHERE ID = ?";
 
 			pstmt = conn.prepareStatement(query);

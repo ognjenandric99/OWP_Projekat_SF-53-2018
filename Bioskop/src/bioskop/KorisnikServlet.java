@@ -115,6 +115,7 @@ public class KorisnikServlet extends HttpServlet {
 				out.print(logOut(request));
 				break;
 			default:
+				System.out.println("Primnjen je AJAX zahtev sa parametrom action="+action);
 				break;
 			}
 		}
