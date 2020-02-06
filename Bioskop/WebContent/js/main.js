@@ -5,8 +5,6 @@ function pushNotification(type,message){
   }
   if(type=="red"){
     color = 'dangnotif';
-    var audio = new Audio('../../audio/tick_bad.mp3');
-    audio.play();
   }
   var notif = document.createElement('div');
   notif.className="notification sakrivennotif "+color;
@@ -22,3 +20,29 @@ function pushNotification(type,message){
     setTimeout(function(){notif.remove();},500);
   }
 }
+
+
+
+
+
+$(document).ready(function(){
+  //
+  if($("#nav_logout")){
+    $("#nav_logout").on('click',function(){
+      var params = {
+    'action' : "logOut"
+      }
+      $.post('KorisnikServlet',params,function(data){
+          var odg = JSON.parse(data);
+          console.log(odg);
+          if(odg.status){
+            window.location.href="login.html";
+          }
+          else{
+            pushNotification('red',odg.message);
+          }
+      });
+    })
+  }
+  //
+})

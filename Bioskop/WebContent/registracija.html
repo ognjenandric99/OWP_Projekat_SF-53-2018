@@ -7,9 +7,56 @@
 <link rel="stylesheet" href="./css/main.css">
 <script src="./js/main.js"></script>
 <script src="./css/bootstrap-4.3.1-dist/js/bootstrap.js"></script>
+<link rel="stylesheet" href="./css/nav.css">
 </head>
 <body>
-<div id="notificationdiv"></div>
+	<nav class="navbar navbar-expand-xl navbar-dark" id="navdiv">
+       <a class="navbar-brand" href="./" id="nav_logo"><span><i class="fas fa-paste"></i> Bioskopcic</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#CollapseOptions" aria-controls="CollapseOptions" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="CollapseOptions">
+          <ul class="navbar-nav ml-auto">
+            <a class="nav-opcija" id="nav_filmovi" href="./filmovi.html">
+              <li class="nav-item povecati">
+                Filmovi
+              </li>
+            </a>
+            <a class="nav-opcija" id="nav_repertoar" href="./index.html">
+              <li class="nav-item povecati">
+                Repertoar
+              </li>
+            </a>
+            <a class="nav-opcija" id="nav_adminPanel" href="./admin_panel.html">
+              <li class="nav-item povecati">
+                Admin Panel
+              </li>
+            </a>
+            <a class="nav-opcija" id="nav_profil" href="./moj_profil.html">
+              <li class="nav-item povecati">
+                Moj Profil
+              </li>
+            </a>
+            <a class="nav-opcija" id="nav_login" href="./login.html">
+              <li class="nav-item povecati">
+                Login
+              </li>
+            </a>
+            <a class="nav-opcija" id="nav_logout" href="#">
+              <li class="nav-item povecati">
+                Log Out
+              </li>
+            </a>
+          </ul>
+
+        </div>
+  </nav>
+  <div id="notificationdiv">
+
+  </div>
+  <script src="./js/nav.js" charset="utf-8"></script>
+
 <div class="col-sm-4 margin0 talcen logregdiv">
 	<label>Username : </label><br><input id="r_username" required /><br>
 	<label>Password : </label><br><input id="r_pass1" required type="password"/><br>

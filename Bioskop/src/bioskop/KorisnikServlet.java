@@ -61,12 +61,19 @@ public class KorisnikServlet extends HttpServlet {
 	   odg = KorisnikDAO.ucitajSveKorisnike(username,password,datum,tip);
 	   return odg;
    }
-   private boolean login(HttpServletRequest request) {
+   private JSONObject login(HttpServletRequest request) {
 	   JSONObject odg = KorisnikDAO.login(request);
-	   System.out.println(odg.get("status"));
-	   return false;
+	   return odg;
    }
-   
+   private Boolean isLoggedIn(HttpServletRequest request) {
+	   return KorisnikDAO.isLoggedIn(request);
+   }
+   private JSONObject getSessionInfo(HttpServletRequest request) {
+	   return KorisnikDAO.getSessionInfo(request);
+   }
+   private JSONObject logOut(HttpServletRequest request) {
+	   return KorisnikDAO.logOut(request);
+   }
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doPost(request,response);
@@ -81,23 +88,35 @@ public class KorisnikServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		String korisnikID = request.getParameter("korisnikID");
 		
-		switch (action) {
-		case "registracija":
-			out.print(registruj(request));
-			break;
-		case "ucitajSve":
-			out.print(ucitajSveKorisnike());
-			break;
-		case "ucitajKorisnika":
-			out.print(ucitajKorisnika(request));
-			break;
-		case "filter":
-			out.print(ucitajFilter(request));
-			break;
-		case "login":
-			out.print(login(request));
-		default:
-			break;
+		if(action!=null && request!=null) {
+			switch (action) {
+			case "registracija":
+				out.print(registruj(request));
+				break;
+			case "ucitajSve":
+				out.print(ucitajSveKorisnike());
+				break;
+			case "ucitajKorisnika":
+				out.print(ucitajKorisnika(request));
+				break;
+			case "filter":
+				out.print(ucitajFilter(request));
+				break;
+			case "login":
+				out.print(login(request));
+				break;
+			case "isLoggedIn":
+				out.print(isLoggedIn(request).toString());
+				break;
+			case "getSessionInfo":
+				out.print(getSessionInfo(request));
+				break;
+			case "logOut":
+				out.print(logOut(request));
+				break;
+			default:
+				break;
+			}
 		}
 	}
 

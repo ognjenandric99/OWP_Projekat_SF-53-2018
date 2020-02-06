@@ -13,15 +13,15 @@ $("#loginbtn").on('click',function(){
 				// tek kada stigne odgovor izvršiće se ova anonimna funkcija
 				var odg = JSON.parse(data);
 				if(odg.status){
-					window.location.href="korisnici.html";
+					window.location.href="index.html";
 				}
 				else{
-					alert("Greska prilikom registrovanja.");
+					alert("Ne postoji korisnik sa tim podacima. Molimo Vas da pokusate ponovo.");
 				}
 				
 		});
 	}
 	else{
-		alert("Proverite unos");
+		alert("Proverite unos!");
 	}
 });

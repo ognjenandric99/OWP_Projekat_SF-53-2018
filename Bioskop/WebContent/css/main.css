@@ -155,6 +155,7 @@ input{
     cursor: pointer;
     pointer-events: all;
     right: 2vw;
+    color: white;
 }
 .sakrivennotif{
   right: -50vw !important;

@@ -2,7 +2,7 @@ $("#registracija").on('click',function(){
 	var user = $("#r_username").val();
 	var pass1 = $("#r_pass1").val();
 	var pass2 = $("#r_pass2").val();
-	
+
 	if(user.length>0 && pass1==pass2 && pass1.length>0){
 		var params = {
 				action: "registracija",
@@ -17,9 +17,9 @@ $("#registracija").on('click',function(){
 					window.location.href="korisnici.html";
 				}
 				else{
-					alert("Greska prilikom registrovanja.");
+					pushNotification('red',odg.message);
 				}
-				
+
 		});
 	}
 	else{
