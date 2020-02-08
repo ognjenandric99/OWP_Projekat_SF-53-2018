@@ -67,14 +67,17 @@
 
   <table id="tabelaProjekcija">
     <tr>
-      <th>Film</th>
-      <th>Termin</th>
-      <th>Sala</th>
-      <th>Tip Projekcije</th>
-      <th>Cena</th>
+      <td colspan="5">Dodajte novu projekciju</td>
+    </tr>
+    <tr>
+      <td> <select id="filmSelect"></select> </td>
+      <td> <input type="datetime-local" id="proj_termin"></td>
+      <td> <select id="salaSelect"></select></td>
+      <td> <select id="tipProjekcijeSelect"></select></td>
+      <td> <input type="number" id="cenaProjekcije" placeholder="Cena projekcije..."></td>
     </tr>
   </table>
 
-  <script src="./js/projekcije.js" charset="utf-8"></script>
+<script src="./js/adminPanel.js" charset="utf-8"></script>
 </body>
 </html>

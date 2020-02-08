@@ -73,7 +73,6 @@ public class KorisnikDAO {
 					
 					//Sredjivanje za pravljenje objekta
 					
-					
 					DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 					Date ddatum = format.parse(Datum);
 					

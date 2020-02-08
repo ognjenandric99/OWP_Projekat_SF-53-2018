@@ -8,6 +8,7 @@ body::before{
     left: 0;
     background-size: cover;
     opacity: 0.03;
+    z-index: -1;
 }
 body{
 	background-color: #070911;

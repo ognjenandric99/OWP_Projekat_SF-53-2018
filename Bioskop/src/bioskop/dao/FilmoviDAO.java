@@ -15,25 +15,72 @@ import bioskop.model.Film;
 import bioskop.model.Zanr;
 
 public class FilmoviDAO {
+	public static Film get(int id1) throws Exception {
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT ID, Naziv,Reziser,Glumci,Zanrovi,Trajanje,Distributer,Zemlja_Porekla,Godina_Proizvodnje,Opis,Status FROM Filmovi WHERE id = ?";
 
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, String.valueOf(id1));
+
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				int index = 1;
+				int ID = Integer.valueOf(rset.getString(index++));
+				String Naziv = rset.getString(index++);
+				String Reziser = rset.getString(index++);
+				String Glumci = rset.getString(index++);
+				String Zanrovi = rset.getString(index++);
+				int Trajanje = Integer.valueOf(rset.getString(index++));
+				String Distributer = rset.getString(index++);
+				String Zemlja_Porekla = rset.getString(index++);
+				int Godina_Proizvodnje = Integer.valueOf(rset.getString(index++));
+				String Opis = rset.getString(index++);
+				String status = rset.getString(index++);
+				
+				//Sredjivanje za pravljenje objekta
+				ArrayList<Zanr> Zanrovi_n = new ArrayList<Zanr>();
+				String[] Zanrs = Zanrovi.split(";");
+				for (String znr : Zanrs) {
+					try{
+						Zanrovi_n.add(Zanr.valueOf(znr));
+					}
+					catch(Exception e){
+						System.out.println("Puklo kod unosa zanra - "+e);
+					}
+				}
+				Film film = new Film(ID, Naziv, Reziser, Glumci, Zanrovi_n, Trajanje, Distributer, Zemlja_Porekla, Godina_Proizvodnje, Opis);
+				
+				return film;
+			}
+			else {
+				System.out.println("Vraceno 0 redova");
+			}
+
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+		}
+		
+		return null;
+	}
+	
 	public static JSONObject getFilm(String id1) throws Exception {
 		Connection conn = ConnectionManager.getConnection();
-		System.out.println(conn);
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
 			System.out.println("Uslo je ovdexxx");
 			String query = "SELECT ID, Naziv,Reziser,Glumci,Zanrovi,Trajanje,Distributer,Zemlja_Porekla,Godina_Proizvodnje,Opis,Status FROM Filmovi WHERE id = ?";
 
-			System.out.println(query);
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, id1);
-			System.out.println(pstmt);
 
 			rset = pstmt.executeQuery();
-			System.out.println(rset);
 			if (rset.next()) {
-				System.out.println("Uslo je ovde23");
 				int index = 1;
 				int ID = Integer.valueOf(rset.getString(index++));
 				String Naziv = rset.getString(index++);
@@ -104,15 +151,12 @@ public class FilmoviDAO {
 		ArrayList<JSONObject> filmovi = new ArrayList<JSONObject>();
 		
 		Connection conn = ConnectionManager.getConnection();
-		System.out.println(conn);
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
-			System.out.println("Uslo je ovdexxx");
 			String query = "SELECT ID, Naziv,Reziser,Glumci,Zanrovi,Trajanje,Distributer,Zemlja_Porekla,Godina_Proizvodnje,Opis,Status FROM Filmovi"
 					+ " WHERE Naziv LIKE ? AND Reziser LIKE ? AND Glumci LIKE ? AND Zanrovi LIKE ? AND Trajanje>? AND Distributer LIKE ? AND Zemlja_Porekla LIKE ? AND Godina_Proizvodnje LIKE ? AND Opis LIKE ?";
 
-			System.out.println(query);
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1,"%"+naziv1+"%");
 			pstmt.setString(2, "%"+reziser1+"%");
@@ -123,13 +167,10 @@ public class FilmoviDAO {
 			pstmt.setString(7, "%"+zemlja1+"%");
 			pstmt.setString(8, "%"+godina1+"%");
 			pstmt.setString(9, "%"+opis1+"%");
-			System.out.println(pstmt.toString());
 
 			rset = pstmt.executeQuery();
-			System.out.println(rset.toString());
 			
 			while (rset.next()) {
-				System.out.println("Uslo je ovde23");
 				int index = 1;
 				int ID = Integer.valueOf(rset.getString(index++));
 				String Naziv = rset.getString(index++);
@@ -146,7 +187,6 @@ public class FilmoviDAO {
 				//Sredjivanje za pravljenje objekta
 				ArrayList<Zanr> Zanrovi_n = new ArrayList<Zanr>();
 				String[] Zanrs = Zanrovi.split(";");
-				System.out.println(Zanrs.length+" XXXXXXX-<<<<");
 				if(Zanrs.length>0) {
 					for (String znr : Zanrs) {
 						try{
@@ -158,13 +198,10 @@ public class FilmoviDAO {
 					}
 				}
 				else {
-					System.out.println("XXX - "+Zanrovi_n.size());
 					Zanrovi_n.add(Zanr.valueOf("NeunesenZanr"));
-					System.out.println("YYY - "+Zanrovi_n.size());
 				}
-				System.out.println("Pre pravljenja");
+
 				Film film = new Film(ID, Naziv, Reziser, Glumci, Zanrovi_n, Trajanje, Distributer, Zemlja_Porekla, Godina_Proizvodnje, Opis);
-				System.out.println(film.getId());
 				JSONObject obj = new JSONObject();
 				obj.put("ID",film.getId());
 				obj.put("Naziv",film.getNaziv());
@@ -186,13 +223,10 @@ public class FilmoviDAO {
 				obj.put("Godina_Proizvodnje",film.getGodinaProizvodnje());
 				obj.put("Opis",film.getOpis());
 				
-				System.out.println(filmovi.size());
 				if(status.equalsIgnoreCase("active")) {
 					filmovi.add(obj);
 				}
-				System.out.println(filmovi.size());
 			}
-			System.out.println(filmovi.size());
 			return filmovi;
 
 		}
@@ -208,15 +242,14 @@ public class FilmoviDAO {
 	
 	public static boolean deleteMovie(String id) {
 		Connection conn = ConnectionManager.getConnection();
-		System.out.println(conn);
 		PreparedStatement pstmt = null;
 		try {
 			String query = "UPDATE Filmovi SET Status='Deleted' WHERE ID = ?";
 
-			System.out.println(query);
+
 			pstmt = conn.prepareStatement(query);
 			pstmt.setString(1, id);
-			System.out.println(pstmt);
+
 
 			int broj = pstmt.executeUpdate();
 			if (broj>0) {
@@ -244,18 +277,17 @@ public class FilmoviDAO {
 		ArrayList<String> zanrovi = new ArrayList<String>();
 		
 		Connection conn = ConnectionManager.getConnection();
-		System.out.println(conn);
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		try {
 			String query = "SELECT Zanr FROM Zanrovi WHERE 1";
 
-			System.out.println(query);
+
 			pstmt = conn.prepareStatement(query);
-			System.out.println(pstmt);
+
 
 			rset = pstmt.executeQuery();
-			System.out.println(rset);
+
 			while (rset.next()) {
 				int index = 1;
 				String zanr = rset.getString(index++);
@@ -302,12 +334,11 @@ public class FilmoviDAO {
 	    
 	    
 	    Connection conn = ConnectionManager.getConnection();
-		System.out.println(conn);
+
 		PreparedStatement pstmt = null;
 		try {
 			String query = "UPDATE Filmovi SET Naziv=?,Reziser=?,Glumci=?,Zanrovi=?,Trajanje=?,Distributer=?,Zemlja_Porekla=?,Godina_Proizvodnje=?,Opis=?,Status='Active' WHERE ID = ?";
 
-			System.out.println(query);
 			pstmt = conn.prepareStatement(query);
 			
 			pstmt.setString(1, naziv);
@@ -320,11 +351,11 @@ public class FilmoviDAO {
 			pstmt.setString(8, godina);
 			pstmt.setString(9, opis);
 			pstmt.setString(10, id);
-			System.out.println("ovde 1");
+
 			
 
 			int broj = pstmt.executeUpdate();
-			System.out.println(broj);
+
 			if (broj>0) {
 				System.out.println("Doslo je do ovde");
 				status = true;
@@ -362,12 +393,10 @@ public class FilmoviDAO {
 		
 		
 		Connection conn = ConnectionManager.getConnection();
-		System.out.println(conn);
 		PreparedStatement pstmt = null;
 		try {
 			String query = "INSERT INTO Filmovi(Naziv,Reziser,Glumci,Zanrovi,Trajanje,Distributer,Zemlja_Porekla,Godina_Proizvodnje,Opis) VALUES (?,?,?,?,?,?,?,?,?)";
 
-			System.out.println(query);
 			pstmt = conn.prepareStatement(query);
 			
 			pstmt.setString(1, naziv);
@@ -380,7 +409,6 @@ public class FilmoviDAO {
 			pstmt.setInt(8, godina);
 			pstmt.setString(9, opis);
 			
-			System.out.println(pstmt);
 
 			int broj = pstmt.executeUpdate();
 			if (broj>0) {
