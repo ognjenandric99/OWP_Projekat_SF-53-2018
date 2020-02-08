@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import org.json.simple.JSONObject;
 
 import bioskop.model.Projekcija;
+import bioskop.model.TipProjekacije;
 
 public class AdminDAO {
 	public static ArrayList<JSONObject> adminPanel_moguciFilmovi(){
@@ -56,7 +57,7 @@ public class AdminDAO {
 				ResultSet rset = null;
 				
 				try {
-					String query = "SELECT ID,Naziv FROM Sale WHERE Status=? ORDER BY Naziv ASC;";
+					String query = "SELECT ID,Naziv,ID_Tipova_Projekcija FROM Sale WHERE Status=? ORDER BY Naziv ASC;";
 		
 					pstmt = conn.prepareStatement(query);
 					pstmt.setString(1, "Active");
@@ -67,9 +68,21 @@ public class AdminDAO {
 						int index = 1;
 						String ID = rset.getString(index++);
 						String Naziv = rset.getString(index++);
+						ArrayList<JSONObject> listaTipovaProjekcija = new ArrayList<JSONObject>();
+						String[] tipovi = rset.getString(index++).split(";");
+						for (String string : tipovi) {
+							TipProjekacije tp =  TipProjekcijeDAO.get(Integer.valueOf(string));
+							if(tp!=null) {
+								JSONObject tipJSON = new JSONObject();
+								tipJSON.put("ID", tp.getId());
+								tipJSON.put("Naziv",tp.getNaziv());
+								listaTipovaProjekcija.add(tipJSON);
+							}
+						}
 						JSONObject obj = new JSONObject();
 						obj.put("ID", ID);
 						obj.put("Naziv",Naziv);
+						obj.put("ListaTipovaProjekcija",listaTipovaProjekcija);
 						lista.add(obj);
 						
 					}

@@ -34,12 +34,15 @@ public class FilmoviServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     private JSONObject ucitajFilm(String idFilma){
+    	JSONObject odg = new JSONObject();
     	Boolean status = false;
     	JSONObject film = null;
 		try {
 			System.out.println(idFilma);
 			film = FilmoviDAO.getFilm(idFilma);
 			if(film!=null) {
+				boolean imamesta = FilmoviDAO.filmImaSlobodnihProjekcija(idFilma);
+				odg.put("imaKarata",imamesta);
 				status = true;
 			}
 			
@@ -47,7 +50,7 @@ public class FilmoviServlet extends HttpServlet {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		JSONObject odg = new JSONObject();
+		
 
 	    odg.put("status", status);
 	    odg.put("film", film);

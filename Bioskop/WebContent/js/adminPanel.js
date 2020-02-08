@@ -1,32 +1,23 @@
 var params = {
-  "action":"adminPanelInfo"
-}
-$.post('AdminServlet',params,function(data){
-  var odg = JSON.parse(data);
-  if(odg.status){
-    pushNotification('green',odg.message);
-    for(i=0;i<odg.listaFilmova.length;i++){
-      var f = odg.listaFilmova[i];
-      var o = document.createElement('option');
-      o.innerText = f.Naziv;
-      o.setAttribute('data-IDFilma',f.ID);
-      document.getElementById('filmSelect').appendChild(o);
-    }
-    for(i=0;i<odg.listaSala.length;i++){
-      var f = odg.listaSala[i];
-      var o = document.createElement('option');
-      o.innerText = f.Naziv;
-      o.setAttribute('data-IDSale',f.ID);
-      document.getElementById('salaSelect').appendChild(o);
-      document.getElementById('salaSelect').getElementsByTagName('option')[0].click();
-    }
-  }
-  else{
-    window.location.href="index.html";
-  }
-});
+		action: "ucitajSve"
+	}
+	// kontrola toka se račva na 2 grane
+$.post('KorisnikServlet', params, function(data) { // u posebnoj programskoj niti se šalje (asinhroni) zahtev
+		// tek kada stigne odgovor izvršiće se ova anonimna funkcija
+		var odg = JSON.parse(data);
+		if(odg.status){
+			var t = document.getElementById('Korisnici');
 
-$("#salaSelect").on('change',function(data){
-  var IDSale = $("#salaSelect option:selected").attr('data-IDSale');
-  alert(IDSale);
+			for(i=0;i<odg.lista.length;i++){
+				var k = odg.lista[i];
+				var r = document.createElement('tr');
+				r.className="item";
+				r.innerHTML="<td data-id='"+k.ID+"' class='usernamelink'>"+k.Username+"</td><td>"+k.Datum+"</td><td>"+k.Uloga+"</td><td>"+k.Status+"</td>";
+				t.appendChild(r);
+			}
+			$('.usernamelink').on('click',function(){
+				window.location.href="prikazKorisnika.html?id="+this.getAttribute('data-id');
+			});
+
+		}
 });

@@ -1,12 +1,12 @@
 #tabelaProjekcija{
   margin: 0 auto;
-    margin-top: 100px;
     background: #0c101e;
     color: #d0d0d0;
     border-radius: 10px;
     font-size: 18px;
         box-shadow: 0px 0px 2px #FF652F;
     overflow: hidden;
+    margin-top: 100px;
 }
 #tabelaProjekcija tr{
   transition: 0.5s all ease;
@@ -33,4 +33,17 @@
 }
 .proj_film_link:hover{
   color: #FF652F;
+}
+#filterBox{
+  width: fit-content;
+margin: 0 auto;
+text-align: center;
+color: #d0d0d0;
+margin-top: 50px;
+}
+.filterBoxOption{
+  width: fit-content;
+    text-align: center;
+    margin: 0 auto;
+    padding: 10px;
 }

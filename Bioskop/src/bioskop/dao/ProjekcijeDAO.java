@@ -28,7 +28,7 @@ public class ProjekcijeDAO {
 		boolean status = false;
 		Projekcija proj = null;
 		try {
-			String query = "SELECT ID,ID_Filma,TipProjekcije,ID_Sale,Termin,CenaKarte,Administrator FROM Projekcije  WHERE ID=?;";
+			String query = "SELECT ID,ID_Filma,TipProjekcije,ID_Sale,Termin,CenaKarte,Administrator,Status,MaksimumKarata,BrojProdanihKarata FROM Projekcije  WHERE ID=?;";
 
 			pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, id);
@@ -48,7 +48,10 @@ public class ProjekcijeDAO {
 				String CenaKarte = rset.getString(index++);
 				int cenaKarte = Integer.valueOf(CenaKarte);
 				String Administrator = rset.getString(index++);
-				proj = new Projekcija(idi, idFilma, tipProjekcije, idSale, datum, cenaKarte, Administrator);
+				String Status = rset.getString(index++);
+				int maks = Integer.valueOf(rset.getString(index++));
+				int prod = Integer.valueOf(rset.getString(index++));
+				proj = new Projekcija(idi, idFilma, tipProjekcije, idSale, datum, cenaKarte, Administrator,Status,maks,prod);
 				status = true;
 			}
 			else {

@@ -38,6 +38,40 @@ public class ProjekcijeServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
+    private JSONObject ucitajProjekciju(HttpServletRequest request) {
+    	JSONObject oodg = new JSONObject();
+    	JSONObject odg = new JSONObject();
+    	boolean status = false;
+    	String message = "Unexpected error.";
+    	try {
+    		int id = Integer.valueOf(request.getParameter("idProjekcije"));
+    		Projekcija p =  ProjekcijeDAO.get(id);
+    		Sala s = SalaDAO.get(Integer.valueOf(p.getIdSale()));
+    		Film f = FilmoviDAO.get(Integer.valueOf(p.getIdFilma()));
+    		odg.put("id", p.getId());
+    		odg.put("idFilma", p.getIdFilma());
+    		odg.put("nazivFilma",f.getNaziv());
+    		odg.put("tipProjekcije",p.getTipProjekcije());
+    		odg.put("idSale",s.getId());
+    		odg.put("nazivSale",s.getNaziv());
+    		DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");   
+    		String date = df.format(p.getDatum());
+    		odg.put("termin",date);
+    		odg.put("cenaKarte",p.getCenaKarte());
+    		odg.put("status",p.getStatus());
+    		int brojKarata = p.getMaksimumKarata()-p.getProdaneKarte();
+    		odg.put("brojKarata",brojKarata);
+    		status = true;
+    		message = "Ucitala se projekcija";
+    		oodg.put("projekcija", odg);
+    	}
+    	catch(Exception e) {
+    		e.printStackTrace();
+    	}
+    	oodg.put("status", status);
+    	oodg.put("message",message);
+    	return odg;
+    }
     private JSONObject ucitajProjekcijeZaDanas(HttpServletRequest request) {
     	JSONObject obj = new JSONObject();
     	boolean status = false;
@@ -93,6 +127,9 @@ public class ProjekcijeServlet extends HttpServlet {
 			switch (action) {
 			case "ucitajProjekcijeZaDanas":
 				out.print(ucitajProjekcijeZaDanas(request));
+				break;
+			case "ucitajProjekciju":
+				out.print(ucitajProjekciju(request));
 				break;
 			default:
 				System.out.println("Primnjen je AJAX zahtev sa parametrom action="+action);

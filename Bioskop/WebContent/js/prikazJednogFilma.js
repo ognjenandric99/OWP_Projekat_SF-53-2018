@@ -13,12 +13,42 @@ function ucitajFilm(idFilma){
 			var odg = JSON.parse(data);
 			console.log(odg);
 			if(odg.status){
-				var film1 = odg.film;
-				var f = document.getElementById('tabelaFilm');
-				var tr = document.createElement('tr');
-				tr.innerHTML = "<td>"+film1.ID+"</td><td>"+film1.Naziv+"</td><td>"+film1.Trajanje+"</td><td>"+film1.Zanrovi+"</td><td>"+film1.Opis+"</td><td>"+film1.Glumci+"</td><td>"+film1.Reziser+"</td><td>"+film1.Godina_Proizvodnje+"</td><td>"+film1.Distributer+"</td><td>"+film1.Zemlja_Porekla+"</td>";
-				f.appendChild(tr);
+				var f = odg.film;
+				$("#f_title").text(f.Naziv);
+				$("#f_reziser").text(f.Reziser);
+				$("#f_glumci").text(f.Glumci.join(","));
+				$("#f_trajanje").text(f.Trajanje);
+				$("#f_zanrovi").text(f.Zanrovi.join(","));
+				$("#f_distributer").text(f.Distributer);
+				$("#f_zemlja").text(f.Zemlja_Porekla);
+				$("#f_god").text(f.Godina_Proizvodnje);
+				$("#f_opis").val(f.Opis);
+				if(localStorage['status']!="false" && odg.imaKarata){
+					var dugme = document.createElement('button');
+					dugme.className="confirmbtn";
+					dugme.innerText = "Kupi kartu";
+					dugme.setAttribute('data-IDFilma',odg.film.ID);
+					dugme.style="font-size: 18px;margin: 0 auto;margin-top:10px;";
+					document.getElementById('dugmici').appendChild(dugme);
+				}
+				if(localStorage['uloga']=="Admin"){
+					var dugme = document.createElement('button');
+					dugme.className="orangebutton";
+					dugme.innerText = "Izmeni";
+					dugme.setAttribute('data-IDFilma',odg.film.ID);
+					dugme.style="font-size: 18px;margin: 0 auto;margin-top:10px;";
+					dugme.onclick=function(){window.location.href="dodajIzmeniFilm.html?id="+odg.film.ID}
+					document.getElementById('dugmici').appendChild(dugme);
+
+					dugme = document.createElement('button');
+					dugme.className="redbtn";
+					dugme.innerText = "Obrisi";
+					dugme.setAttribute('data-IDFilma',odg.film.ID);
+					dugme.style="font-size: 18px;margin: 0 auto;margin-top:10px;";
+					dugme.onclick=function(){window.location.href="dodajIzmeniFilm.html?id="+odg.film.ID}
+					document.getElementById('dugmici').appendChild(dugme);
+				}
 			}
-			
+
 	});
 }

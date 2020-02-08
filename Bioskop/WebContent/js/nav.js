@@ -3,6 +3,9 @@ var params = {
 }
 $.post('KorisnikServlet',params,function(data){
     var odg = JSON.parse(data);
+    localStorage['uloga']= odg.uloga;
+    localStorage['status'] = odg.status;
+    localStorage['username'] = odg.username;
     if(odg.status && odg.uloga=="obicanKorisnik" && odg.username!=null){
       //Ulogovan je kao korisnik
       $("#nav_filmovi").show();

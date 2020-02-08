@@ -287,7 +287,7 @@ public class KorisnikDAO {
 		boolean status = false;
 		try {
 
-			String query = "SELECT ID, Username,Password,DatumRegistracije,Uloga FROM Users"
+			String query = "SELECT ID, Username,Password,DatumRegistracije,Uloga,Status FROM Users"
 					+ " WHERE Username LIKE ? AND Password LIKE ? AND DatumRegistracije LIKE ? AND Uloga LIKE ?";
 
 
@@ -309,6 +309,7 @@ public class KorisnikDAO {
 				String Password = rset.getString(index++);
 				String Datum = rset.getString(index++);
 				String Uloga = rset.getString(index++);
+				String Status = rset.getString(index++);
 				
 				
 				//Sredjivanje za pravljenje objekta
@@ -318,13 +319,14 @@ public class KorisnikDAO {
 				DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 				Date ddatum = format.parse(Datum);
 				
-				User user = new User(ID, Username, Password, bioskop.model.UlogeUsera.valueOf(Uloga), ddatum, "Active");
+				User user = new User(ID, Username, Password, bioskop.model.UlogeUsera.valueOf(Uloga), ddatum, Status);
 				JSONObject obj = new JSONObject();
 				obj.put("ID",user.getID());
 				obj.put("Username",user.getUsername());
 				obj.put("Password",user.getPassword());
 				obj.put("Datum",format.format(user.getDatumRegistracije()));
 				obj.put("Uloga",user.getUloga().toString());
+				obj.put("Status",user.getStatus());
 				korisnici.add(obj);
 			}
 			odg.put("status",status);

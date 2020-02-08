@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <script src="./js/main.js" charset="utf-8"></script>
 <link rel="stylesheet" href="./css/nav.css">
-<link rel="stylesheet" href="./css/projekcije.css">
+<link rel="stylesheet" href="./css/prikazFilma.css">
 </head>
 <body>
   <nav class="navbar navbar-expand-xl navbar-dark" id="navdiv">
@@ -64,30 +64,41 @@
   </div>
   <script src="./js/nav.js" charset="utf-8"></script>
 
-    <div id="filterBox">
-      <button type="button" name="button" class="orangebutton" id="filterOpenBox">Filtriranje Meni</button>
-      <div class="filterBoxOption hidden">Ime filma : <input type="text" id="f_imeFilma"></div>
-      <div class="filterBoxOption hidden">Pocetak od : <input type="datetime-local" id="f_pocetakOd" value="2000-12-31T10:10"></div>
-      <div class="filterBoxOption hidden">Pocetak do : <input type="datetime-local" id="f_pocetakDo" value="2100-12-31T14:02"></div>
-      <div class="filterBoxOption hidden">Sala : <select id="filter_Sale"></select></div>
-      <div class="filterBoxOption hidden">Tip Projekcije : <select id="filter_tipProjekcije"></select></div>
-      <div class="filterBoxOption hidden">Cena karte od : <input type="number" value="0" id="f_cenaOd"> </div>
-      <div class="filterBoxOption hidden">Cena karte do : <input type="number" value="999999" id="f_cenaDo"> </div>
-      <div class="filterBoxOption hidden"> <button type="button" name="button" class="confirmbtn" id="filterbtn">Filtriraj</button> </div>
+  <div id="OnefilmDiv">
+    <div class="row">
+      <span>Naziv : </span> <input id="f_title"></input>
     </div>
-
-    <table id="tabelaProjekcija">
-      <tr>
-        <th>Film</th>
-        <th>Termin</th>
-        <th>Sala</th>
-        <th>Tip Projekcije</th>
-        <th>Cena</th>
-        <th></th>
-      </tr>
-    </table>
+    <div class="row">
+      <span>Reziser : </span> <input id="f_reziser"></input>
+    </div>
+    <div class="row">
+      <span>Glumci : </span> <input id="f_glumci"></input>
+    </div>
+    <div class="row">
+      <span>Trajanje : </span> <input id="f_trajanje"></input>
+    </div>
+    <div class="row">
+      <span>Zanrovi : </span> <select id="f_zanrovi" multiple style="height: 100px;width: 50%;margin-right: 15px;"></select> </input>
+    </div>
+    <div class="row">
+      <span>Distributer : </span> <input id="f_distributer"></input>
+    </div>
+    <div class="row">
+      <span>Zemlja Porekla : </span> <input id="f_zemlja"></input>
+    </div>
+    <div class="row">
+      <span>Godina Proizvodnje : </span> <input id="f_god"></input>
+    </div>
+    <div class="row">
+      <textarea id="f_opis"></textarea>
+    </div>
+    <div class="row" id="dugmici">
+      <button type="button" name="button" class="confirmbtn margin0" style="margin-top:10px;" id="savebtn">Sacuvaj film</button>
+      <button type="button" name="button" class="redbtn hidden margin0" id="deletebtn">Obrisi Film</button>
+    </div>
+    <p>Beleska : Glumce odvojte sa tackom-zarez (;).</p>
   </div>
 
-  <script src="./js/projekcije.js" charset="utf-8"></script>
+<script src="./js/dodajIzmeniFilm.js"></script>
 </body>
 </html>

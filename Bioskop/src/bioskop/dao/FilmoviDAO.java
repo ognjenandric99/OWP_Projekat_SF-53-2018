@@ -4,6 +4,7 @@ import java.net.http.HttpRequest;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,33 @@ import bioskop.model.Film;
 import bioskop.model.Zanr;
 
 public class FilmoviDAO {
+	public static boolean filmImaSlobodnihProjekcija(String idFilma) throws SQLException {
+		boolean imanema = false;
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		try {
+			String query = "SELECT * FROM Projekcije WHERE ID_Filma = ? AND MaksimumKarata-BrojProdanihKarata>0";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, idFilma);
+
+			rset = pstmt.executeQuery();
+			if (rset.next()) {
+				imanema = true;
+			}
+			else {
+				System.out.println("Vraceno 0 redova");
+			}
+
+		} finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+		}
+		
+		return imanema;
+	}
 	public static Film get(int id1) throws Exception {
 		Connection conn = ConnectionManager.getConnection();
 		PreparedStatement pstmt = null;
