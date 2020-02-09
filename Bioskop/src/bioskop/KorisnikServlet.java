@@ -74,6 +74,51 @@ public class KorisnikServlet extends HttpServlet {
    private JSONObject logOut(HttpServletRequest request) {
 	   return KorisnikDAO.logOut(request);
    }
+   private JSONObject changeUser(HttpServletRequest request) {
+	   JSONObject odg = new JSONObject();
+	   boolean sifra = false;
+	   boolean uloga = false;
+	   if(((String) request.getSession().getAttribute("username")).equals(KorisnikDAO.get(request.getParameter("idKorisnika")).getUsername())) {
+		   String idKorisnika = request.getParameter("idKorisnika");
+		   String novaSifra = request.getParameter("novasifra");
+		   sifra = KorisnikDAO.promeniSifru(request, idKorisnika, novaSifra);
+	   }
+	   if(((String) request.getSession().getAttribute("uloga")).equals("Admin")) {
+		   String idKorisnika = request.getParameter("idKorisnika");
+		   String novaUloga= request.getParameter("novaUloga");
+		   if(!((String) request.getSession().getAttribute("username")).equals(KorisnikDAO.get(idKorisnika).getUsername())) {
+			   uloga = KorisnikDAO.promeniUlogu(request, idKorisnika, novaUloga);
+		   }
+	   }
+	   odg.put("promenjenaSifra", sifra);
+	   odg.put("promenjenaUloga", uloga);
+	   return odg;
+   }
+   
+   private JSONObject deleteUser(HttpServletRequest request) {
+	   JSONObject obj = new JSONObject();
+	   boolean status = false;
+	   String message = "Nije moguce obrisati korisnika.";
+	   
+	   String uloga = (String) request.getSession().getAttribute("uloga");
+	   if(uloga.equals("Admin")) {
+		   String ajdi = request.getParameter("idKorisnika");
+		   System.out.println("Moje : "+(String)request.getSession().getAttribute("ajdi")+" Uneto : "+ajdi);
+		   if(!((String)request.getSession().getAttribute("ajdi")).equals(ajdi)) {
+			   status = KorisnikDAO.deleteUser(ajdi);
+		   }
+		   if(status) {
+			   message = "Uspesno ste obrisali korisnika";
+		   }
+	   }
+	   else {
+		   message = "Morate biti ulogovani kao Administrator.";
+	   }
+	   obj.put("status", status);
+	   obj.put("message",message);
+	   return obj;
+	   
+   }
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doPost(request,response);
@@ -113,6 +158,12 @@ public class KorisnikServlet extends HttpServlet {
 				break;
 			case "logOut":
 				out.print(logOut(request));
+				break;
+			case "changeUser":
+				out.print(changeUser(request));
+				break;
+			case "deleteUser":
+				out.print(deleteUser(request));
 				break;
 			default:
 				System.out.println("Primnjen je AJAX zahtev sa parametrom action="+action);

@@ -51,13 +51,13 @@ var params = {
 							window.location.href="filmovi.html";
 						}
 						else{
-							document.getElementById('errorMsg').innerText="Greska prilikom brisanja";
+							pushNotification('red',"Greska prilikom brisanja");
 						}
-						
+
 				});
 			})
 		}
-		
+
 });
 
 var params = {
@@ -72,65 +72,10 @@ var params = {
 				var op = document.createElement('option');
 				op.value=odg.zanrovi[i];
 				op.innerText = odg.zanrovi[i];
-				document.getElementById('zanroviDropdown').append(op);
-				var op = document.createElement('option');
-				op.value=odg.zanrovi[i];
-				op.innerText = odg.zanrovi[i];
 				document.getElementById('f_zanrovi').append(op);
 			}
 		}
-		
-});
 
-$("#dodajFilmbtn").on("click",function(){
-	var naziv1 = $("#am_naziv").val();
-	var trajanje1 = $("#am_trajanje").val();
-	var zanr1 = $("#zanroviDropdown").val();
-	var opis1 = $("#am_opis").val();
-	var glumci1 = $("#am_glumci").val();
-	var reziser1 = $("#am_reziser").val();
-	var godina1 = $("#am_godinaProizvodnje").val();
-	var distributer1 = $("#am_distributer").val();
-	var zemlja1 = $("#am_zemljaPorekla").val();
-	
-	zanr1.sort();
-	zanr1 = zanr1.join(";");
-	glumci1 = glumci1.split(",");
-	glumci1.sort();
-	glumci1 = glumci1.join(";");
-	
-	if(naziv1.length<=0 || trajanje1<1 || distributer1.length<=0 || zemlja1.length<=0 || godina1.length<=0){
-		document.getElementById('errorMsg').innerText="Proverite unos";
-	}
-	else{
-		var params = {
-				action: "dodajFilm",
-				naziv:naziv1,
-				trajanje:trajanje1,
-				zanr:zanr1,
-				opis:opis1,
-				glumci:glumci1,
-				reziser:reziser1,
-				godina:godina1,
-				distributer:distributer1,
-				zemlja:zemlja1
-			}
-			// kontrola toka se račva na 2 grane
-			$.post('FilmoviServlet', params, function(data) { // u posebnoj programskoj niti se šalje (asinhroni) zahtev
-				// tek kada stigne odgovor izvršiće se ova anonimna funkcija
-				var odg = JSON.parse(data);
-				if(odg.status){
-					window.location.href="http://localhost:8080/Bioskop/filmovi.html";
-				}
-				else{
-					document.getElementById('errorMsg').innerText="Greska prilikom dodavanja.";
-				}
-				
-		});
-	}
-	
-	
-	
 });
 
 $("#filterBtnFilm").on("click",function(){
@@ -140,10 +85,10 @@ $("#filterBtnFilm").on("click",function(){
 	var godina1 = $("#f_godina").val();
 	var distributer1 = $("#f_distributer").val();
 	var zemlja1 = $("#f_zemlja").val();
-	
+
 	zanr1.sort();
 	zanr1 = zanr1.join(";");
-	
+
 		var params = {
 				action: "filterFilm",
 				naziv:naziv1,
@@ -192,22 +137,22 @@ $("#filterBtnFilm").on("click",function(){
 										window.location.href="http://localhost:8080/Bioskop/filmovi.html";
 									}
 									else{
-										document.getElementById('errorMsg').innerText="Greska prilikom brisanja";
+										pushNotification('red',"Greska prilikom brisanja");
 									}
-									
+
 							});
 						})
 					}
 					else{
-						document.getElementById('errorMsg').innerText="Ne postoji film sa zadatim kriterijumom";
+						pushNotification('red',"Ne postoji film sa zadatim kriterijumom");
 					}
 				}
 				else{
-					document.getElementById('errorMsg').innerText="Ne postoji film sa zadatim kriterijumom.";
+					pushNotification('red',"Ne postoji film sa zadatim kriterijumom.");
 				}
-				
+
 		});
-	
-	
-	
+
+
+
 });

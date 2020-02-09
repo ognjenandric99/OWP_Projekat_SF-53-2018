@@ -6,6 +6,7 @@ $.post('KorisnikServlet',params,function(data){
     localStorage['uloga']= odg.uloga;
     localStorage['status'] = odg.status;
     localStorage['username'] = odg.username;
+    localStorage['ajdi']=odg.ajdi;
     if(odg.status && odg.uloga=="obicanKorisnik" && odg.username!=null){
       //Ulogovan je kao korisnik
       $("#nav_filmovi").show();
@@ -22,5 +23,20 @@ $.post('KorisnikServlet',params,function(data){
       $("#nav_filmovi").show();
       $("#nav_repertoar").show();
       $("#nav_login").show();
+      localStorage['uloga']= null;
+      localStorage['status'] = false;
+      localStorage['username'] = null;
+      localStorage['ajdi']=null;
+    }
+    if(odg.status){
+      document.getElementById('nav_profil').href="prikazKorisnika.html?id="+odg.ajdi;
     }
 });
+
+if(localStorage['poruka']!=undefined){
+  var poruka = localStorage['poruka'].split("|");
+  var boja = poruka[0];
+  var msg = poruka[1];
+  pushNotification(boja,msg);
+  localStorage.removeItem('poruka');
+}

@@ -419,7 +419,7 @@ public class FilmoviDAO {
 		String distributer = request.getParameter("distributer");
 		String zemlja = request.getParameter("zemlja");
 		
-		
+		System.out.println("OVO JE ZEMLJA : "+zemlja);
 		Connection conn = ConnectionManager.getConnection();
 		PreparedStatement pstmt = null;
 		try {
@@ -437,7 +437,6 @@ public class FilmoviDAO {
 			pstmt.setInt(8, godina);
 			pstmt.setString(9, opis);
 			
-
 			int broj = pstmt.executeUpdate();
 			if (broj>0) {
 				return true;
@@ -448,7 +447,7 @@ public class FilmoviDAO {
 
 		} 
 		catch(Exception e) {
-			
+			e.printStackTrace();
 		}
 		finally {
 			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}

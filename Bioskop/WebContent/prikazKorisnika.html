@@ -1,33 +1,81 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <title>Korisnik</title>
 <script src="./js/jquery-3.3.1.js"></script>
-<style>
-	.usernamelink{
-		color:blue;
-		font-size:22px;
-		font-style:italic;
-		cursor:pointer
-	}
-</style>
+<meta charset="utf-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="css\bootstrap-4.3.1-dist\css\bootstrap.css">
+<script src="css\bootstrap-4.3.1-dist\js\bootstrap.js" charset="utf-8"></script>
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/scrollbarstyle.css">
+<link rel="shortcut icon" href="css/favicon.png" />
+<link href="https://fonts.googleapis.com/css?family=Bebas+Neue|Roboto:400,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+<script src="./js/main.js" charset="utf-8"></script>
+<link rel="stylesheet" href="./css/nav.css">
+<link rel="stylesheet" href="./css/jedanKorisnik.css">
 </head>
 <body>
-  <a href="index.html"> <p>Pocetna</p> </a>
-  <a href="korisnici.html"> <p>Nazad</p> </a>
-  <a href="registracija.html"> <p>Registracija</p> </a>
-  
-  
-<table id="korisniciTabela">
-	
-	<tr>
-		<th>Username</th>
-		<th>Password</th>
-		<th>Datum Registracije</th>
-		<th>Tip Accounta</th>
-	</tr>
-</table>
+  <nav class="navbar navbar-expand-xl navbar-dark" id="navdiv">
+       <a class="navbar-brand" href="./" id="nav_logo"><span><i class="fas fa-video"></i> Bioskopcic</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#CollapseOptions" aria-controls="CollapseOptions" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="CollapseOptions">
+          <ul class="navbar-nav ml-auto">
+            <a class="nav-opcija" id="nav_filmovi" href="./filmovi.html">
+              <li class="nav-item povecati">
+                Filmovi
+              </li>
+            </a>
+            <a class="nav-opcija" id="nav_repertoar" href="./index.html">
+              <li class="nav-item povecati">
+                Repertoar
+              </li>
+            </a>
+            <a class="nav-opcija" id="nav_adminPanel" href="./admin_panel.html">
+              <li class="nav-item povecati">
+                Admin Panel
+              </li>
+            </a>
+            <a class="nav-opcija" id="nav_profil" href="./moj_profil.html">
+              <li class="nav-item povecati">
+                Moj Profil
+              </li>
+            </a>
+            <a class="nav-opcija" id="nav_login" href="./login.html">
+              <li class="nav-item povecati">
+                Login
+              </li>
+            </a>
+            <a class="nav-opcija" id="nav_logout" href="#">
+              <li class="nav-item povecati">
+                Log Out
+              </li>
+            </a>
+          </ul>
+
+        </div>
+  </nav>
+  <div id="notificationdiv">
+
+  </div>
+  <script src="./js/nav.js" charset="utf-8"></script>
+
+<div id="userBox">
+	<p>Korisnicko ime : <span id="user_username"></span> </p>
+	<p>Sifra  : <input id="user_pass"  type="password"> </p>
+	<p>Datum registracije : <span id="user_registracija"></span> </p>
+	<p>Uloga : <select id="user_ulogaselect"> <option value="obicanKorisnik">obicanKorisnik</option> <option value="Admin">Admin</option> </select> </p>
+  <p>Status : <span id="user_status"></span> </p>
+  <div id="dugmici">
+		<button type="button" name="button" class="confirmbtn margin0" id="saveUser">Sacuvaj</button>
+	</div>
+</div>
+
+
 <script src="./js/jedan_korisnik.js"></script>
 </body>
 </html>

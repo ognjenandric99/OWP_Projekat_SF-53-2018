@@ -1,11 +1,23 @@
 #tabelaFilm{
-  background-color: rgba(255,200,100,0.4);
-  border: 2px solid black;
-  border-radius: 5px;
   text-align: center;
+      font-size: 14px;
+      background-color: #0c101e;
+      margin: 0 auto;
+      margin-top: 100px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 5px #FF652F;
+      color: #d0d0d0;
 }
 #tabelaFilm th,#tabelaFilm td{
   padding: 10px;
+}
+#tabelaFilm input{
+  background: 0;
+    border-radius: 10px;
+    padding: 5px;
+    color: #d0d0d0;
+    outline: 0 !important;
+    width: 150px;
 }
 th{
   font-size: 22px;
@@ -18,7 +30,7 @@ tr:hover{
 	background-color:grey;
 }
 tr:first-child{
-  background-color: #2b2b28;
+  background-color: rgba(255,255,255,0.1);
 }
 .editMovie::after{
 	content:"Izmena";
@@ -44,5 +56,7 @@ tr:first-child{
 	font-size: 22px;
     text-decoration: underline;
     font-weight: 600;
-    color:blue;
+}
+.editMovie{
+  color: black;
 }

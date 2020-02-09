@@ -33,20 +33,19 @@ $.post('ProjekcijeServlet',params,function(data){
 
       var td6 = document.createElement('td');
       var btn1 = document.createElement('button'); btn1.innerText = "Pogledaj"; btn1.className="confirmbtn pogledajprojbtn"; btn1.setAttribute('data-idProjekcije',p.id_projekcije); td6.appendChild(btn1);
-      if(localStorage['uloga']=="Admin"){
-        var btn2 = document.createElement('button'); btn2.innerText = "Izmeni"; btn2.className="orangebutton izmeniprojbtn";btn2.setAttribute('data-idProjekcije',p.id_projekcije); td6.appendChild(btn2);
-        var btn3 = document.createElement('button'); btn3.innerText = "Obrisi"; btn3.className="redbtn obrisiprojbtn"; btn3.setAttribute('data-idProjekcije',p.id_projekcije); td6.appendChild(btn3);
-      }
+      // if(localStorage['uloga']=="Admin"){
+      //   var btn2 = document.createElement('button'); btn2.innerText = "Izmeni"; btn2.className="orangebutton izmeniprojbtn";btn2.setAttribute('data-idProjekcije',p.id_projekcije); td6.appendChild(btn2);
+      //   var btn3 = document.createElement('button'); btn3.innerText = "Obrisi"; btn3.className="redbtn obrisiprojbtn"; btn3.setAttribute('data-idProjekcije',p.id_projekcije); td6.appendChild(btn3);
+      // }
       tr.appendChild(td6);
 
       document.getElementById('tabelaProjekcija').appendChild(tr);
 
-
-      $(".obrisiprojbtn").on('click',function(data){
-
-      });
       $(".proj_film_link").on('click',function(data){
         window.location.href="prikazFilma.html?id="+this.getAttribute('data-idFilma');
+      });
+      $(".pogledajprojbtn").on('click',function(data){
+        window.location.href="prikazProjekcije.html?id="+this.getAttribute('data-idProjekcije');
       })
     }
   }
