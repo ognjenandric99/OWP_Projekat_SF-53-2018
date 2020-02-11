@@ -10,6 +10,10 @@ var id1 = url.searchParams.get("id");
 			// tek kada stigne odgovor izvršiće se ova anonimna funkcija
 			var odg = JSON.parse(data);
 			if(odg.status){
+				if(localStorage['ajdi']!=id1 && localStorage['uloga']!=['Admin']){
+					localStorage['poruka']="red|Ne mozete da vidite sadrzaj na toj stranici.";
+					window.location.href="index.html";
+				}
 				$("#user_username").text(odg.korisnik.Username);
 				if(odg.korisnik.Username==localStorage['username']){
 					$("#user_pass").val(odg.korisnik.Password);
@@ -89,3 +93,50 @@ var id1 = url.searchParams.get("id");
 			}
 		})
 	})
+
+var params = {
+    'action' : 'ucitajKarteKorisnika',
+    'id' : id1
+}
+$.post('KorisnikServlet',params,function(data){
+    var odg = JSON.parse(data);
+
+		if(odg.status){
+			for(i=0;i<odg.karte.length;i++){
+				var k = odg.karte[i];
+				var tr = document.createElement('tr');
+				var td1= document.createElement('td');
+				td1.innerText=k.nazivFilma;
+				td1.setAttribute('data-idFilma',k.ID_filma);
+				td1.className="ticket_filmName";
+				tr.appendChild(td1);
+
+				var td2= document.createElement('td');
+				td2.innerText=k.sediste;
+				tr.appendChild(td2);
+
+				var td3= document.createElement('td');
+				td3.innerText=k.Termin;
+				tr.appendChild(td3);
+
+				var td4= document.createElement('td');
+				td4.innerHTML="<button class='pogledajbtn confirmbtn' data-idKarte='"+k.ID+"' data-idKorisnika='"+id1+"'>Pogledaj Kartu</button>";
+				td4.className="ticket_button";
+				tr.appendChild(td4);
+
+				document.getElementById('karteTable').appendChild(tr);
+			}
+			$(".pogledajbtn").on('click',function(){
+				localStorage['kartaKorisnik']=this.getAttribute('data-idKorisnika');
+				window.location.href="karta.html?id="+this.getAttribute('data-idKarte');
+			})
+		}
+		else{
+			localStorage['poruka']="red|Desila se greska, molimo Vas da pokusate kasnije";
+
+		}
+		if(odg.karte.length==0){
+			document.getElementById('karteTable').style.display="none";
+			localStorage['poruka']="red|Ne postoje karte za tog korisnika.";
+		}
+});

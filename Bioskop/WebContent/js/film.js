@@ -49,25 +49,27 @@ var params = {
 				}
 			});
 			$(".editMovie").on('click',function(){
-				window.location.href="izmenaFilm.html?id="+this.getAttribute('data-movieID');
+				window.location.href="dodajIzmeniFilm.html?id="+this.getAttribute('data-movieID');
 			})
 			$(".deleteMovie").on("click",function(){
-				var params = {
-						action: "obrisiFilm",
-						filmID: this.getAttribute('data-movieID')
-					}
-					// kontrola toka se račva na 2 grane
-				$.post('FilmoviServlet', params, function(data) { // u posebnoj programskoj niti se šalje (asinhroni) zahtev
-						// tek kada stigne odgovor izvršiće se ova anonimna funkcija
-						var odg = JSON.parse(data);
-						if(odg.status){
-							window.location.href="filmovi.html";
+				if(confirm("Da li ste sigurni da zelite da obrisete?")){
+					var params = {
+							action: "obrisiFilm",
+							filmID: this.getAttribute('data-movieID')
 						}
-						else{
-							pushNotification('red',"Greska prilikom brisanja");
-						}
+						// kontrola toka se račva na 2 grane
+					$.post('FilmoviServlet', params, function(data) { // u posebnoj programskoj niti se šalje (asinhroni) zahtev
+							// tek kada stigne odgovor izvršiće se ova anonimna funkcija
+							var odg = JSON.parse(data);
+							if(odg.status){
+								window.location.href="filmovi.html";
+							}
+							else{
+								pushNotification('red',"Greska prilikom brisanja");
+							}
 
-				});
+					});
+				}
 			})
 		}
 

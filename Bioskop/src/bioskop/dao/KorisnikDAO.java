@@ -21,14 +21,10 @@ import bioskop.model.UlogeUsera;
 public class KorisnikDAO {
 	
 	public static User get(String id) {
-		JSONObject odg = new JSONObject();
-		JSONObject korisnik = null;
-		
 		Connection conn = ConnectionManager.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		
-		boolean status = false;
+		User user = null;
 		try {
 			String query = "SELECT ID, Username,Password,DatumRegistracije,Uloga,Status FROM Users"
 					+ " WHERE ID = ?";
@@ -39,7 +35,6 @@ public class KorisnikDAO {
 			rset = pstmt.executeQuery();
 			
 			if (rset.next()) {
-				status = true;
 				int index = 1;
 				String ID = rset.getString(index++);
 				String Username = rset.getString(index++);
@@ -54,8 +49,7 @@ public class KorisnikDAO {
 				DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 				Date ddatum = format.parse(Datum);
 				
-				User user = new User(ID, Username, Password, bioskop.model.UlogeUsera.valueOf(Uloga), ddatum, Status);
-				return user;
+				user = new User(ID, Username, Password, bioskop.model.UlogeUsera.valueOf(Uloga), ddatum, Status);
 			}
 			else {
 
@@ -70,7 +64,7 @@ public class KorisnikDAO {
 		try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
 		try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
 	}
-		return null;
+		return user;
 	}
 	
 	public static Boolean isLoggedIn(HttpServletRequest request) {

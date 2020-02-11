@@ -20,6 +20,35 @@ import bioskop.model.UlogeUsera;
 
 public class ProjekcijeDAO {
 	
+	public static boolean smanjiStanjeKarata(String idProjekcije) {
+		boolean status = false;
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement pstmt = null;
+		try {
+			String query = "UPDATE Projekcije SET BrojProdanihKarata=BrojProdanihKarata+1 WHERE ID=?";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, idProjekcije);
+			
+			
+
+			int broj = pstmt.executeUpdate();
+			if (broj>0) {
+				status = true;
+			}
+
+		} 
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+			
+		}
+		return status;
+	}
+	
 	public static Projekcija get(int id) {
 		Connection conn = ConnectionManager.getConnection();
 		PreparedStatement pstmt = null;

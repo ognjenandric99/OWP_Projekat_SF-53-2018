@@ -2,7 +2,10 @@ package bioskop;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,11 +16,20 @@ import org.apache.tomcat.jni.Address;
 import org.json.simple.JSONObject;
 
 import bioskop.dao.FilmoviDAO;
+import bioskop.dao.KarteDAO;
 import bioskop.dao.KorisnikDAO;
+import bioskop.dao.ProjekcijeDAO;
 import bioskop.dao.SalaDAO;
+import bioskop.dao.SedisteDAO;
 import bioskop.dao.TipProjekcijeDAO;
 import bioskop.model.Film;
+import bioskop.model.Karta;
+import bioskop.model.Projekcija;
+import bioskop.model.Sala;
+import bioskop.model.Sediste;
+import bioskop.model.User;
 import bioskop.dao.ConnectionManager;
+import bioskop.dao.SedisteDAO;
 
 /**
  * Servlet implementation class FilmoviServlet
@@ -141,6 +153,124 @@ public class KorisnikServlet extends HttpServlet {
 	   odg.put("message", message);
 	   return odg;
    }
+   private JSONObject kupiKartuInfo(HttpServletRequest request) {
+	   JSONObject odg = new JSONObject();
+	   boolean status = false;
+	   String message = "Desila se greska.";
+	   try {
+		   String id = request.getParameter("idProjekcije");
+		   Projekcija p = ProjekcijeDAO.get(Integer.valueOf(id));
+		   if(p!=null) {
+			   if(p.getDatum().compareTo(new Date())>0) {
+				   ArrayList<Sediste> sSedista = SedisteDAO.slobodnaSedista(String.valueOf(p.getId()));
+				   ArrayList<String> slobSedista = new ArrayList<String>();
+				   for (Sediste sediste : sSedista) {
+					slobSedista.add(String.valueOf(sediste.getRedniBroj()));
+				}
+				   Film film = FilmoviDAO.get(p.getIdFilma());
+				   if(film!=null) {
+					   JSONObject info = new JSONObject();
+					   info.put("idProjekcije", p.getId());
+					   info.put("slobodnaSedista", slobSedista);
+					   DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+					   info.put("termin",df.format(p.getDatum()));
+					   info.put("cenaKarte",p.getCenaKarte());
+					   info.put("nazivFilma",film.getNaziv());
+					   info.put("tipProjekcije", p.getTipProjekcije());
+					   info.put("idSale",p.getIdSale());
+					   info.put("nazivSale", SalaDAO.get(p.getIdSale()).getNaziv());
+					   info.put("trajanje", film.getTrajanje());
+					   odg.put("info", info);
+					   message = "Ucitane informacije";
+					   status = true;
+				   }
+				   else {
+					   message = "Film ne postoji";
+				   }
+			   }
+			   else {
+				   message = "Ta projekcija je u toku/zavrsena.";
+			   }
+		   }
+		   else {
+			   message = "Ne postoji ta projekcija.";
+		   }
+		   
+	   }catch(Exception e) {
+		   e.printStackTrace();
+	   }
+	   odg.put("status", status);
+	   odg.put("message",message);
+	   return odg;
+   }
+   
+   private JSONObject kupiKartu(HttpServletRequest request) {
+	   JSONObject odg = new JSONObject();
+	   boolean status = false;
+	   String message = "Unexpected error";
+	   
+	   String username = (String) request.getSession().getAttribute("username");
+	   String idProjekcije = request.getParameter("id");
+	   String sedista = request.getParameter("odabrana_sedista");
+	   if(username!=null) {
+		   status = KarteDAO.kupiKartu(idProjekcije, sedista,username);
+		   if(status) {
+			   message = "Uspesno ste zavrsili kupovinu";
+		   }
+	   }
+	   else {
+		   message = "Morate biti ulogovani da bi ste kupili kartu";
+	   }
+	   odg.put("status", status);
+	   odg.put("message",message);
+	   return odg;
+	   
+   }
+   private JSONObject ucitajKarteKorisnika(HttpServletRequest request,String username) {
+	   JSONObject odg = new JSONObject();
+	   boolean status = false;
+	   String message = "Unexpected error";
+	   
+	   
+	   try {
+		   if(!username.equals((String) request.getSession().getAttribute("username")) && !((String)request.getSession().getAttribute("uloga")).equals("Admin")) {
+			   message = "Ne mozete dobiti karte za ovog korisnika";
+			   throw new Exception();
+		   }
+		   
+		   ArrayList<Karta> karte = KarteDAO.ucitajKarteZaKorisnika(username);
+		   ArrayList<JSONObject> k = new ArrayList<JSONObject>();
+		   for (Karta karta : karte) {
+			   Projekcija p = ProjekcijeDAO.get(Integer.valueOf(karta.getIdProjekcije()));
+			   Film f = FilmoviDAO.get(p.getIdFilma());
+			   Sala s = SalaDAO.get(p.getIdSale());
+			   status = true;
+			   JSONObject obj = new JSONObject();
+			   obj.put("ID",karta.getId());
+			   obj.put("ID_filma", f.getId());
+			   obj.put("nazivFilma", f.getNaziv());
+			   DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+			   String datum = df.format(p.getDatum());
+			   obj.put("Termin",datum);
+			   obj.put("ID_projekcije", p.getId());
+			   obj.put("tipProjekcije", p.getTipProjekcije());
+			   obj.put("sala",s.getNaziv());
+			   obj.put("sediste",karta.getOznakaSedista());
+			   obj.put("cena", p.getCenaKarte());
+			   k.add(obj);
+			   status = true;
+		   }
+		   odg.put("karte", k);
+	   }catch(Exception e) {
+		   e.printStackTrace();
+		   status = false;
+		   
+	   }
+	   
+	   odg.put("status", status);
+	   odg.put("message",message);
+	   return odg;
+   }
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doPost(request,response);
@@ -189,6 +319,20 @@ public class KorisnikServlet extends HttpServlet {
 				break;
 			case "ucitajProjFilterInfo":
 				out.print(ucitajProjFilterInfo(request));
+				break;
+			case "kupiKartuInfo":
+				out.print(kupiKartuInfo(request));
+				break;
+			case "kupiKartu":
+				out.print(kupiKartu(request));
+				break;
+			case "ucitajKarteKorisnika":
+				User user = KorisnikDAO.get(request.getParameter("id"));
+				if(user!=null) {
+					String username = user.getUsername();
+					out.print(ucitajKarteKorisnika(request,username));
+				}
+				
 				break;
 			default:
 				System.out.println("Primnjen je AJAX zahtev sa parametrom action="+action);

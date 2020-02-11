@@ -43,7 +43,9 @@ $.post('ProjekcijeServlet',params,function(data){
           localStorage['poruka']="red|Ulogujte se da bi ste kupili kartu!";
           window.location.href="index.html";
         }
-        window.location.href="kupiKartu.html?id="+this.getAttribute('data-IDProjekcije');
+        else{
+          window.location.href="kupiKartu.html?id="+this.getAttribute('data-IDProjekcije');
+        }
       });
       $("#obrisibtn").on('click',function(){
         if(confirm("Da li ste sigurni da zelite da obrisete projekciju?")){
