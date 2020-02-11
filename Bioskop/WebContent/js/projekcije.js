@@ -8,6 +8,7 @@ $.post('ProjekcijeServlet',params,function(data){
       var p = odg.listaProjekcija[i];
       var tr = document.createElement('tr');
       tr.setAttribute('data-idProjekcije',p.id_projekcije);
+      tr.className="item";
       var td1 = document.createElement('td');
       td1.innerText = p.naziv_filma;
       td1.setAttribute('data-idFilma',p.id_filma);
@@ -143,6 +144,7 @@ $("#filterbtn").on('click',function(){
           var p = odg.lista[i];
           var tr = document.createElement('tr');
           tr.setAttribute('data-idProjekcije',p.ID);
+          tr.className="item";
           var td1 = document.createElement('td');
           td1.innerText = p.Naziv_Filma;
           td1.setAttribute('data-idFilma',p.ID_Filma);

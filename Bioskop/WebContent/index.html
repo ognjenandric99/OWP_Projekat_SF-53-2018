@@ -15,6 +15,7 @@
 <script src="./js/main.js" charset="utf-8"></script>
 <link rel="stylesheet" href="./css/nav.css">
 <link rel="stylesheet" href="./css/projekcije.css">
+<script src="./js/w3.js" charset="utf-8"></script>
 </head>
 <body>
   <nav class="navbar navbar-expand-xl navbar-dark" id="navdiv">
@@ -78,11 +79,11 @@
 
     <table id="tabelaProjekcija">
       <tr>
-        <th>Film</th>
-        <th>Termin</th>
-        <th>Sala</th>
-        <th>Tip Projekcije</th>
-        <th>Cena</th>
+        <th onclick="w3.sortHTML('#tabelaProjekcija','.item', 'td:nth-child(1)')">Film</th>
+        <th onclick="w3.sortHTML('#tabelaProjekcija','.item', 'td:nth-child(2)')">Termin</th>
+        <th onclick="w3.sortHTML('#tabelaProjekcija','.item', 'td:nth-child(3)')">Sala</th>
+        <th onclick="w3.sortHTML('#tabelaProjekcija','.item', 'td:nth-child(4)')">Tip Projekcije</th>
+        <th onclick="w3.sortHTML('#tabelaProjekcija','.item', 'td:nth-child(5)')">Cena</th>
         <th></th>
       </tr>
     </table>
