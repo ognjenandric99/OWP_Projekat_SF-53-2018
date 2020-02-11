@@ -66,11 +66,11 @@
 
     <div id="filterBox">
       <button type="button" name="button" class="orangebutton" id="filterOpenBox">Filtriranje Meni</button>
-      <div class="filterBoxOption hidden">Ime filma : <input type="text" id="f_imeFilma"></div>
+      <div class="filterBoxOption hidden">Film : <select id="filter_Filmovi"> <option value="" data-idfilma=""></option> </select> </div>
       <div class="filterBoxOption hidden">Pocetak od : <input type="datetime-local" id="f_pocetakOd" value="2000-12-31T10:10"></div>
       <div class="filterBoxOption hidden">Pocetak do : <input type="datetime-local" id="f_pocetakDo" value="2100-12-31T14:02"></div>
-      <div class="filterBoxOption hidden">Sala : <select id="filter_Sale"></select></div>
-      <div class="filterBoxOption hidden">Tip Projekcije : <select id="filter_tipProjekcije"></select></div>
+      <div class="filterBoxOption hidden">Sala : <select id="filter_Sale"> <option value="" data-IDSale=""></option></select></div>
+      <div class="filterBoxOption hidden">Tip Projekcije : <select id="filter_tipProjekcije"> <option value="" data-tipovi='[{"ID":null,"Naziv":""}]'></option></select></div>
       <div class="filterBoxOption hidden">Cena karte od : <input type="number" value="0" id="f_cenaOd"> </div>
       <div class="filterBoxOption hidden">Cena karte do : <input type="number" value="999999" id="f_cenaDo"> </div>
       <div class="filterBoxOption hidden"> <button type="button" name="button" class="confirmbtn" id="filterbtn">Filtriraj</button> </div>

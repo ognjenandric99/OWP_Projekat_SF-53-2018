@@ -13,6 +13,7 @@ import org.apache.tomcat.jni.Address;
 import org.json.simple.JSONObject;
 
 import bioskop.dao.FilmoviDAO;
+import bioskop.dao.SalaDAO;
 import bioskop.model.Film;
 import bioskop.dao.ConnectionManager;
 
@@ -57,6 +58,31 @@ public class FilmoviServlet extends HttpServlet {
 	    
 	    return odg;
 		
+    }
+    
+    private JSONObject ucitajZaDodavanjeProjekcije(HttpServletRequest request) {
+    	JSONObject obj = new JSONObject();
+    	boolean status = false;
+    	String message = "Neocekivani error se desio.";
+    	if(((String) request.getSession().getAttribute("uloga")).equals("Admin")) {
+    		try {
+    			ArrayList<JSONObject> filmovi = FilmoviDAO.getFilms("", 0, "", "", "", "", "", "", "");
+    			ArrayList<JSONObject> sale = SalaDAO.ucitajSale();
+    			obj.put("filmovi",filmovi);
+    			obj.put("sale", sale);
+    			status = true;
+    			message = "Ucitani su podaci";
+    		}catch(Exception e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	else {
+    		message = "Morate biti ulogovani kao administrator da bi ste pristupili sadrzaju.";
+    	}
+    	
+    	obj.put("status", status);
+    	obj.put("message",message);
+    	return obj;
     }
     
     private JSONObject ucitajSveFilmove() {
@@ -192,6 +218,9 @@ public class FilmoviServlet extends HttpServlet {
 			break;
 		case "izmeniFilm":
 			out.print(izmenaFilma(request));
+			break;
+		case "ucitajZaDodavanjeProjekcije":
+			out.print(ucitajZaDodavanjeProjekcije(request));
 			break;
 		default:
 			break;

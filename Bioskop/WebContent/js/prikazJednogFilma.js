@@ -28,8 +28,14 @@ function ucitajFilm(idFilma){
 					dugme.className="confirmbtn";
 					dugme.innerText = "Kupi kartu";
 					dugme.setAttribute('data-IDFilma',odg.film.ID);
+					dugme.setAttribute('ID',"kupiKartubtn");
 					dugme.style="font-size: 18px;margin: 0 auto;margin-top:10px;";
 					document.getElementById('dugmici').appendChild(dugme);
+
+					$("#kupiKartubtn").on('click',function(){
+						localStorage['projekcija_film_id'] = $("#kupiKartubtn").attr('data-IDFilma');
+						window.location.href="index.html";
+					})
 				}
 				if(localStorage['uloga']=="Admin"){
 					var dugme = document.createElement('button');

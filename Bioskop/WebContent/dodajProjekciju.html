@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Prikaz Projekcije</title>
+<title>Pocetna Stranica KT</title>
 <script src="./js/jquery-3.3.1.js"></script>
 <meta charset="utf-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
 <script src="./js/main.js" charset="utf-8"></script>
 <link rel="stylesheet" href="./css/nav.css">
-<link rel="stylesheet" href="./css/prikazProjekcije.css">
+<link rel="stylesheet" href="./css/prikazFilma.css">
 </head>
 <body>
   <nav class="navbar navbar-expand-xl navbar-dark" id="navdiv">
@@ -66,31 +66,28 @@
 
   <div id="OnefilmDiv">
     <div class="row">
-      <span>Naziv filma : </span> <span id="p_title"></span>
+      <span>Film : </span> <select id="ID_Filma"></select>
     </div>
     <div class="row">
-      <span>Tip Projekcije : </span> <span id="p_tipProjekcije"></span>
+      <span>Sala : </span> <select id="ID_Sale"></select>
     </div>
     <div class="row">
-      <span>Sala : </span> <span id="p_sala"></span>
+      <span>Tip Projekcije : </span> <select id="tipProjekcije"></select>
     </div>
     <div class="row">
-      <span>Pocetak : </span> <span id="p_pocetak"></span>
+      <span>Pocetak Termina : </span> <input id="TerminPocetak" type="datetime-local"></input>
     </div>
     <div class="row">
-      <span>Cena Karte: </span> <span id="p_cena"></span>
+      <span>Cena Karte : </span> <input type="number" id="cenaKarte">
     </div>
     <div class="row">
-      <span>Broj slobodnih karata : </span> <span id="p_brojSlobodnih"></span>
-    </div>
-    <div class="row">
-      <span>Status : </span> <span id="statusProj"></span>
+      <span>Broj mesta : </span> <span id="maxBrojSedistaSpan">0</span>
     </div>
     <div class="row" id="dugmici">
-
+      <button type="button" name="button" class="confirmbtn margin0" style="margin-top:10px;" id="savebtn">Dodaj Projekciju</button>
     </div>
   </div>
 
-<script src="./js/prikazJedneProjekcije.js"></script>
+<script src="./js/dodajProjekciju.js"></script>
 </body>
 </html>

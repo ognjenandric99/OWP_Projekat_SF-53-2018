@@ -70,6 +70,132 @@ public class ProjekcijeDAO {
 		return proj;
 	}
 	
+	public static JSONObject filterProjekcije(String id_Filma,String pocetak,String pocetakKraj,String idSale,String oznakaTipa,String cenaMin,String cenaMax) {
+		JSONObject odg = new JSONObject();
+		boolean status = false;
+		String message = "Unexpected error.";
+		
+		ArrayList<Projekcija> lista = new ArrayList<Projekcija>();
+				
+				Connection conn = ConnectionManager.getConnection();
+				PreparedStatement pstmt = null;
+				ResultSet rset = null;
+				
+				try {
+					String query = "SELECT ID FROM Projekcije WHERE Status='Active' AND (Termin BETWEEN ? AND ?) AND ID_Filma LIKE ?"
+							+ " AND ID_sale LIKE ? AND TipProjekcije LIKE ? AND CenaKarte BETWEEN ? AND ?  ORDER BY ID_Filma ASC,Termin ASC";
+		
+					pstmt = conn.prepareStatement(query);
+		
+					pstmt.setString(1,pocetak);
+					pstmt.setString(2,pocetakKraj);
+					pstmt.setString(3,id_Filma);
+					pstmt.setString(4,idSale);
+					pstmt.setString(5,oznakaTipa);
+					pstmt.setString(6, cenaMin);
+					pstmt.setString(7, cenaMax);
+					
+					
+					rset = pstmt.executeQuery();
+					while(rset.next()) {
+						
+						int index = 1;
+						String ID = rset.getString(index++);
+						Projekcija p = get(Integer.valueOf(ID));
+						if(p!=null) {
+							lista.add(p);
+						}
+					status = true;
+					message = "Ucitano";
+					}
+					odg.put("listaProjekcija", lista);
+					
+					
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+				try {rset.close();} catch (Exception ex1) {ex1.printStackTrace();}
+				try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			}
+		
+		odg.put("status", status);
+		odg.put("message", message);
+		return odg;
+	}
+	
+	public static boolean obrisiProjekciju(String idProjekcije) {
+		boolean status = false;
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement pstmt = null;
+		try {
+			String query = "UPDATE Projekcije SET Status='Deleted' WHERE ID=?";
+
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, idProjekcije);
+			
+			
+
+			int broj = pstmt.executeUpdate();
+			if (broj>0) {
+				status = true;
+			}
+
+		} 
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+			try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+			
+		}
+		return status;
+	}
+	public static boolean dodajProjekciju(Projekcija projekcija,String krajTermina) {
+		boolean status = false;
+		 Connection conn = ConnectionManager.getConnection();
+			PreparedStatement pstmt = null;
+			try {
+				String query = "INSERT INTO Projekcije(ID_Filma,TipProjekcije,ID_Sale,Termin,CenaKarte,Administrator,Status,MaksimumKarata,KrajTermina) VALUES (?,?,?,?,?,?,?,?,?)";
+
+				pstmt = conn.prepareStatement(query);
+				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+				Date date = new Date();
+				pstmt.setString(1, projekcija.getIdFilma()+"");
+				pstmt.setString(2, projekcija.getTipProjekcije());
+				pstmt.setString(3, projekcija.getIdSale()+"");
+				Date datum = projekcija.getDatum();
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");      
+				String pocetak = df.format(datum);
+				pstmt.setString(4, pocetak+"");
+				pstmt.setString(5, projekcija.getCenaKarte()+"");
+				pstmt.setString(6, projekcija.getUsernameAdministratora()+"");
+				pstmt.setString(7, "Active");
+				pstmt.setString(8, projekcija.getMaksimumKarata()+"");
+				pstmt.setString(9, krajTermina);
+				
+				
+				
+
+				int broj = pstmt.executeUpdate();
+				if (broj>0) {
+					status = true;
+				}
+
+			} 
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			finally {
+				try {pstmt.close();} catch (Exception ex1) {ex1.printStackTrace();}
+				try {conn.close();} catch (Exception ex1) {ex1.printStackTrace();} // ako se koristi DBCP2, konekcija se mora vratiti u pool
+				
+			}
+		return status;
+	}
 	public static ArrayList<Projekcija> ucitajZaDatum(HttpServletRequest request,String datum) {
 		ArrayList<Projekcija> lista = new ArrayList<Projekcija>();
 		
@@ -86,9 +212,7 @@ public class ProjekcijeDAO {
 			pstmt.setString(1, datum);
 			pstmt.setString(2,datum+" 23:59:59");
 			rset = pstmt.executeQuery();
-			System.out.println("SELECT ID FROM Projekcije  WHERE Status='Active' AND Termin BETWEEN "+datum+" AND '"+datum+" 23:59:59' ORDER BY ID_Filma ASC,Termin ASC ;");
 			while(rset.next()) {
-				System.out.println("USAO SAM U OVO SRANJE");
 				int index = 1;
 				String ID = rset.getString(index++);
 				Projekcija p = get(Integer.valueOf(ID));

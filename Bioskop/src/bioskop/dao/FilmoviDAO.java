@@ -365,7 +365,7 @@ public class FilmoviDAO {
 
 		PreparedStatement pstmt = null;
 		try {
-			String query = "UPDATE Filmovi SET Naziv=?,Reziser=?,Glumci=?,Zanrovi=?,Trajanje=?,Distributer=?,Zemlja_Porekla=?,Godina_Proizvodnje=?,Opis=?,Status='Active' WHERE ID = ?";
+			String query = "UPDATE Filmovi SET Naziv=?,Reziser=?,Glumci=?,Zanrovi=?,Trajanje=?,Distributer=?,Zemlja_Porekla=?,Godina_Proizvodnje=?,Opis=? WHERE ID = ?";
 
 			pstmt = conn.prepareStatement(query);
 			

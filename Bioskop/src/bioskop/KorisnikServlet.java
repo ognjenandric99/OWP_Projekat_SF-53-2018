@@ -14,6 +14,8 @@ import org.json.simple.JSONObject;
 
 import bioskop.dao.FilmoviDAO;
 import bioskop.dao.KorisnikDAO;
+import bioskop.dao.SalaDAO;
+import bioskop.dao.TipProjekcijeDAO;
 import bioskop.model.Film;
 import bioskop.dao.ConnectionManager;
 
@@ -119,6 +121,26 @@ public class KorisnikServlet extends HttpServlet {
 	   return obj;
 	   
    }
+   private JSONObject ucitajProjFilterInfo(HttpServletRequest request) {
+	   JSONObject odg = new JSONObject();
+	   boolean status = false;
+	   String message = "Unexpected error";
+	   
+	   try {
+		   ArrayList<JSONObject> filmovi = FilmoviDAO.getFilms("", 0, "", "", "", "", "", "", "");
+		   ArrayList<JSONObject> sale = SalaDAO.ucitajSale();
+		   odg.put("filmovi", filmovi);
+		   odg.put("sale", sale);
+		   status = true;
+		   message = "Ucitano";
+	   }catch(Exception e) {
+		   e.printStackTrace();
+	   }
+	   
+	   odg.put("status", status);
+	   odg.put("message", message);
+	   return odg;
+   }
    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doPost(request,response);
@@ -164,6 +186,9 @@ public class KorisnikServlet extends HttpServlet {
 				break;
 			case "deleteUser":
 				out.print(deleteUser(request));
+				break;
+			case "ucitajProjFilterInfo":
+				out.print(ucitajProjFilterInfo(request));
 				break;
 			default:
 				System.out.println("Primnjen je AJAX zahtev sa parametrom action="+action);

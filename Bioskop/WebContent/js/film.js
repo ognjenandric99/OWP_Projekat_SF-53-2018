@@ -26,9 +26,22 @@ var params = {
 				var tr = document.createElement('tr');
 				tr.className="item";
 				tr.setAttribute('data-FilmID',film1.ID);
-				tr.innerHTML = "<td class='movie_name' data-filmid='"+film1.ID+"'>"+film1.Naziv+"</td><td>"+film1.Trajanje+"</td><td>"+film1.Zanrovi+"</td><td>"+film1.Godina_Proizvodnje+"</td><td>"+film1.Distributer+"</td><td>"+film1.Zemlja_Porekla+"</td><td><span class='editMovie' data-movieID='"+film1.ID+"'></span><span class='deleteMovie' data-movieID='"+film1.ID+"'></span></td>";
+				var dugmicitamoneki = "";
+				if(localStorage['uloga']=="Admin"){
+					dugmicitamoneki = "<span class='editMovie' data-movieID='"+film1.ID+"'></span><span class='deleteMovie' data-movieID='"+film1.ID+"'></span>";
+				}
+				else{
+					dugmicitamoneki = "<span class='pogledajMovie' data-movieID='"+film1.ID+"'></span>"
+				}
+				tr.innerHTML = "<td class='movie_name' data-filmid='"+film1.ID+"'>"+film1.Naziv+"</td><td>"+film1.Trajanje+"</td><td>"+film1.Zanrovi+"</td><td>"+film1.Godina_Proizvodnje+"</td><td>"+film1.Distributer+"</td><td>"+film1.Zemlja_Porekla+"</td><td>"+dugmicitamoneki+"</td>";
 				f.appendChild(tr);
 			}
+			$(".pogledajMovie").on('click',function(){
+				var id = this.getAttribute('data-movieID');
+				if(id>0 && id!=null && id!=undefined){
+					window.location.href="prikazFilma.html?id="+id;
+				}
+			});
 			$(".movie_name").on("click", function(){
 				var id = this.getAttribute('data-filmid');
 				if(id>0 && id!=null && id!=undefined){
