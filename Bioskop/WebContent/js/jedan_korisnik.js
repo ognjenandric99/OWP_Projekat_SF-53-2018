@@ -28,7 +28,7 @@ var id1 = url.searchParams.get("id");
 					$("#user_ulogaselect").prop('disabled',true);
 				}
 				$("#user_status").text(odg.korisnik.Status);
-				if(localStorage['uloga']=="Admin"){
+				if(localStorage['uloga']=="Admin" && odg.korisnik.Status=="Active"){
 					var dugme = document.createElement('button');
 					dugme.className="redbtn margin0";
 					dugme.innerText="Obrisi Korisnika";
@@ -38,19 +38,21 @@ var id1 = url.searchParams.get("id");
 
 					//Ovde dodati funkciju za delete
 					$("#deleteUser").on('click',function(){
-						var params = {
-						    'action' : "deleteUser",
-						    'idKorisnika' : this.getAttribute('data-IDUsera')
+						if(confirm("Da li sigurno zelite da obrisete ovog korisnika?")){
+							var params = {
+							    'action' : "deleteUser",
+							    'idKorisnika' : this.getAttribute('data-IDUsera')
+							}
+							$.post('KorisnikServlet',params,function(data){
+							    var odg = JSON.parse(data);
+									if(odg.status){
+										pushNotification('green',odg.message);
+									}
+									else{
+										pushNotification('red',odg.message);
+									}
+							});
 						}
-						$.post('KorisnikServlet',params,function(data){
-						    var odg = JSON.parse(data);
-								if(odg.status){
-									pushNotification('green',odg.message);
-								}
-								else{
-									pushNotification('red',odg.message);
-								}
-						});
 					})
 
 				}
@@ -137,6 +139,7 @@ $.post('KorisnikServlet',params,function(data){
 		}
 		if(odg.karte.length==0){
 			document.getElementById('karteTable').style.display="none";
-			localStorage['poruka']="red|Ne postoje karte za tog korisnika.";
+			localStorage.removeItem('poruka');
+			pushNotification("red","Ne postoje karte za tog korisnika.");
 		}
 });

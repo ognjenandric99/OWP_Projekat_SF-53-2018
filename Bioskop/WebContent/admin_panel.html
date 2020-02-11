@@ -89,16 +89,16 @@
 
   <div class="row margin0 talcen" style="margin-top:30px !important;margin-bottom:50px !important;">
     <div class="talcen margin0">
-      <input type="datetime-local" id="vreme"> <button type="button" name="button" class="confirmbtn" id="izvestajbtn">Uzmi izvestaj</button>
+      <input type="date" id="vreme"> <button type="button" name="button" class="confirmbtn" id="izvestajbtn">Uzmi izvestaj</button>
     </div>
   </div>
   <div class="row">
     <table class="margin0" id="izvestajTabela">
       <tr>
-        <th>Film</th>
-        <th>Broj Projekcija</th>
-        <th>Broj Prodatih Karata</th>
-        <th>Ukupna Zarada</th>
+        <th onclick="w3.sortHTML('#izvestajTabela','.item', 'td:nth-child(1)')">Film</th>
+        <th onclick="w3.sortHTML('#izvestajTabela','.item', 'td:nth-child(2)')">Broj Projekcija</th>
+        <th onclick="w3.sortHTML('#izvestajTabela','.item', 'td:nth-child(3)')">Broj Prodatih Karata</th>
+        <th onclick="w3.sortHTML('#izvestajTabela','.item', 'td:nth-child(4)')">Ukupna Zarada</th>
       </tr>
     </table>
   </div>

@@ -106,6 +106,10 @@ public class AdminServlet extends HttpServlet {
 			case "deleteTicket":
 				out.print(deleteTicket(request));
 				break;
+			case "izvestaj":
+				String termin = request.getParameter("datum");
+				out.print(AdminDAO.izvestaj(termin));
+				break;
 			default:
 				System.out.println("Primnjen je AJAX zahtev sa parametrom action="+action);
 				break;
