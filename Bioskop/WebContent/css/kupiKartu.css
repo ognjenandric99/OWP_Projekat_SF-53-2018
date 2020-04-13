@@ -1,11 +1,48 @@
+#platnoDiv{
+    background-color: black;
+    text-align: center;
+    color: #d0d0d0;
+    font-size: 22px;
+    padding: 10px;
+    margin-top: 30px;
+    margin-bottom: 50px;
+    clip-path: polygon(20% 0%,80% 0,75% 100%,25% 100%);
+    border: 2px solid dimgrey;
+}
+.w-100{
+	margin-bottom: 20px;
+}
+.slobodnoSediste{
+	border:2px solid lime;
+}
+.zauzetoSediste{
+	border:2px solid crimson;
+}
+.pickovanoSediste{
+	background-color:darkgreen !important;
+}
+.sedisteDiv{
+	transition:0.5s all ease;
+    background-color: black;
+    border-radius: 50%;
+    margin: 20px;
+    font-size: 16px;
+    margin: 0 auto;
+    cursor: pointer;
+    padding:4px;
+}
+.sedisteDiv:hover{
+	background-color: darkslategrey;
+}
 #kartaBox{
   background-color: #0c101e;
     top: 100px;
     margin: 0 auto;
     color: #d0d0d0;
-    padding: 20px 100px;
+    padding:20px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px #FF652F;
+    margin-bottom:50px;
 }
 #film_title{
   text-align: center;
@@ -24,6 +61,8 @@
 text-align: center;
 margin: 0 auto;
 margin-top: 20px;
+display:flex;
+flex-wrap:wrap;
 }
 #sedista option:hover{
   background-color: #192140;

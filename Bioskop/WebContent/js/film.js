@@ -130,32 +130,50 @@ $("#filterBtnFilm").on("click",function(){
 							var tr = document.createElement('tr');
 							tr.className="item";
 							tr.setAttribute('data-FilmID',film1.ID);
-							tr.innerHTML = "<td class='movie_name' data-filmid='"+film1.ID+"'>"+film1.Naziv+"</td><td>"+film1.Trajanje+"</td><td>"+film1.Zanrovi+"</td><td>"+film1.Godina_Proizvodnje+"</td><td>"+film1.Distributer+"</td><td>"+film1.Zemlja_Porekla+"</td><td><span class='editMovie' data-movieID='"+film1.ID+"'></span><span class='deleteMovie' data-movieID='"+film1.ID+"'></span></td>";
+							if(localStorage['uloga']=="Admin"){
+								var dugmicizzz = "<span class='editMovie' data-movieID='"+film1.ID+"'></span><span class='deleteMovie' data-movieID='"+film1.ID+"'></span>";
+							}
+							else{
+								var dugmicizzz = "<span class='pogledajMovie' data-movieID='"+film1.ID+"'></span>";
+									
+							}
+							tr.innerHTML = "<td class='movie_name' data-filmid='"+film1.ID+"'>"+film1.Naziv+"</td><td>"+film1.Trajanje+"</td><td>"+film1.Zanrovi+"</td><td>"+film1.Godina_Proizvodnje+"</td><td>"+film1.Distributer+"</td><td>"+film1.Zemlja_Porekla+"</td><td>"+dugmicizzz+"</td>";
 							f.appendChild(tr);
 						}
+						$(".pogledajMovie").on('click',function(){
+							var id = this.getAttribute('data-movieID');
+							if(id>0 && id!=null && id!=undefined){
+								window.location.href="prikazFilma.html?id="+id;
+							}
+						});
 						$(".movie_name").on("click", function(){
 							var id = this.getAttribute('data-filmid');
 							if(id>0 && id!=null && id!=undefined){
-								window.location.href="http://localhost:8080/Bioskop/prikazFilma.html?id="+id;
+								window.location.href="prikazFilma.html?id="+id;
 							}
 						});
+						$(".editMovie").on('click',function(){
+							window.location.href="dodajIzmeniFilm.html?id="+this.getAttribute('data-movieID');
+						})
 						$(".deleteMovie").on("click",function(){
-							var params = {
-									action: "obrisiFilm",
-									filmID: this.getAttribute('data-movieID')
-								}
-								// kontrola toka se račva na 2 grane
-							$.post('FilmoviServlet', params, function(data) { // u posebnoj programskoj niti se šalje (asinhroni) zahtev
-									// tek kada stigne odgovor izvršiće se ova anonimna funkcija
-									var odg = JSON.parse(data);
-									if(odg.status){
-										window.location.href="http://localhost:8080/Bioskop/filmovi.html";
+							if(confirm("Da li ste sigurni da zelite da obrisete?")){
+								var params = {
+										action: "obrisiFilm",
+										filmID: this.getAttribute('data-movieID')
 									}
-									else{
-										pushNotification('red',"Greska prilikom brisanja");
-									}
+									// kontrola toka se račva na 2 grane
+								$.post('FilmoviServlet', params, function(data) { // u posebnoj programskoj niti se šalje (asinhroni) zahtev
+										// tek kada stigne odgovor izvršiće se ova anonimna funkcija
+										var odg = JSON.parse(data);
+										if(odg.status){
+											window.location.href="filmovi.html";
+										}
+										else{
+											pushNotification('red',"Greska prilikom brisanja");
+										}
 
-							});
+								});
+							}
 						})
 					}
 					else{

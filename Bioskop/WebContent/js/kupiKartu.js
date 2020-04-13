@@ -1,7 +1,7 @@
 var url_string = window.location.href;
 var url = new URL(url_string);
 var id = url.searchParams.get("id");
-
+localStorage['odabranaSedista']="";
 var params = {
     'action' : 'kupiKartuInfo',
     'idProjekcije' : id
@@ -19,17 +19,91 @@ $.post('KorisnikServlet',params,function(data){
         localStorage['poruka']="red|Nema slobodnih sedista za tu projekciju";
         window.location.href="index.html";
       }
-      for(i=0;i<k.slobodnaSedista.length;i++){
+      
+      var brojacZaBreakRow = 0;
+      console.log(k.slobodnaSedista);
+      for(i=0;i<parseInt(k.maxSedista);i++){
+    	var tipSedista = "zauzetoSediste";
+    	if(k.slobodnaSedista.includes(i+1+"")){
+    		tipSedista = "slobodnoSediste";
+    	}
+    	else{
+    		
+    	}
         document.getElementById('sedista').value=k.slobodnaSedista[0];
-        var o = document.createElement('option');
-        o.setAttribute('value',k.slobodnaSedista[i]);
-        o.innerText= k.slobodnaSedista[i];
+        var o = document.createElement('div');
+        o.className = "sedisteDiv "+tipSedista+" col-sm-1";
+        o.setAttribute('value',i+1);
+        o.innerText= i+1;
         document.getElementById('sedista').appendChild(o);
+        
+        brojacZaBreakRow++;
+        if(brojacZaBreakRow==10){
+        	brojacZaBreakRow= 0;
+        	var br = document.createElement('div');
+        	br.className="w-100";
+        	document.getElementById('sedista').appendChild(br);
+        }
+        
       }
-      $("#ukupnaCena").text($("#sedista").val().length*parseInt(k.cenaKarte));
-      $("#sedista").on('change',function(){
-        $("#ukupnaCena").text($("#sedista").val().length*parseInt(k.cenaKarte));
-      });
+      $("#ukupnaCena").text("0");
+      $(".slobodnoSediste").on('click',function(){
+    	  
+    	  var broj = this.getAttribute('value');
+    	  var s = localStorage['odabranaSedista'];
+    	  if(s==undefined || s==null){
+    		  localStorage['odabranaSedista']=[broj];
+    		  this.classList.toggle("pickovanoSediste");
+    	  }
+    	  else{
+    		  
+    		  s = s.split(";");
+    		  if(s.includes(broj)){
+    			  novaLista = [];
+        		  for(z=0;z<s.length;z++){
+        			  if(s[z]!=broj){
+        				  novaLista.push(s[z]);
+        			  }
+        		  }
+        		  s=novaLista;
+        		  this.classList.toggle("pickovanoSediste");
+    		  }
+    		  else{
+    			  console.log("Broj : "+broj);
+    			  console.log("S : "+s);
+    			  console.log("S.length : "+s.length);
+    			  var visemanje = false;
+    			  for(sk=0;sk<s.length;sk++){
+    				  console.log("poredi se : "+s[sk]+" i : "+broj);
+    				  if(parseInt(s[sk])+1==parseInt(broj) || parseInt(s[sk])-1==parseInt(broj)){
+    					  visemanje=true;
+    				  }
+    			  }
+    			  if(visemanje){
+    				  s.push(broj);
+    				  this.classList.toggle("pickovanoSediste");
+    			  }
+    			  
+    			  else{
+    				  if(s[0]==""){
+    					  s[0]=broj;
+    					  this.classList.toggle("pickovanoSediste");
+    				  }
+    				  else{
+    					  pushNotification("red","Sedista moraju biti jedno do drugog.");
+    				  }
+    			  }
+    		  }
+    		  localStorage['odabranaSedista']=s.join(";");
+    	  }
+    	  console.log(localStorage['odabranaSedista']);
+    	  if(localStorage['odabranaSedista']!=""){
+    		  $("#ukupnaCena").text(localStorage['odabranaSedista'].split(";").length*parseInt(k.cenaKarte));
+    	  }
+    	  else{
+    		  $("#ukupnaCena").text("0");
+    	  }
+      })
     }
     else{
       localStorage['poruka']="red|"+odg.message;
@@ -38,22 +112,23 @@ $.post('KorisnikServlet',params,function(data){
 });
 
 $("#kupibtn").on('click',function(){
-  var sedista = $("#sedista").val();
-  if(sedista.length==0){
-    pushNotification('red',"Morate da odaberete barem jedno sediste");
+  var sedista = localStorage['odabranaSedista'];
+  if(sedista==undefined || sedista==null || sedista==""){
+	  pushNotification('red',"Morate da odaberete barem jedno sediste");
   }
   else{
+	sedista = sedista.split(";");
     var status = true;
     for(i=0;i<sedista.length;i++){
       if(sedista[i+1]){
-        if(sedista[i]+1!=sedista[i+1] && sedista[i]!=sedista[i+1]-1){
+        if(parseInt(sedista[i])+1!=parseInt(sedista[i+1]) && parseInt(sedista[i])!=parseInt(sedista[i+1])-1){
           status=false;
         }
       }
     }
     if(status){
       var ajdi = id;
-      var odabrana_sedista = sedista.join(";");
+      var odabrana_sedista = localStorage['odabranaSedista'];
       var params = {
         'action' : 'kupiKartu',
         'id' : ajdi,

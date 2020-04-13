@@ -161,12 +161,16 @@ public class KorisnikServlet extends HttpServlet {
 		   String id = request.getParameter("idProjekcije");
 		   Projekcija p = ProjekcijeDAO.get(Integer.valueOf(id));
 		   if(p!=null) {
+			   int maxSedista = 0;
 			   if(p.getDatum().compareTo(new Date())>0) {
 				   ArrayList<Sediste> sSedista = SedisteDAO.slobodnaSedista(String.valueOf(p.getId()));
 				   ArrayList<String> slobSedista = new ArrayList<String>();
 				   for (Sediste sediste : sSedista) {
 					slobSedista.add(String.valueOf(sediste.getRedniBroj()));
+					
+					
 				}
+				   maxSedista = SalaDAO.brojMaksimumSedistaSale(String.valueOf(p.getIdSale()));
 				   Film film = FilmoviDAO.get(p.getIdFilma());
 				   if(film!=null) {
 					   JSONObject info = new JSONObject();
@@ -180,6 +184,7 @@ public class KorisnikServlet extends HttpServlet {
 					   info.put("idSale",p.getIdSale());
 					   info.put("nazivSale", SalaDAO.get(p.getIdSale()).getNaziv());
 					   info.put("trajanje", film.getTrajanje());
+					   info.put("maxSedista",maxSedista);
 					   odg.put("info", info);
 					   message = "Ucitane informacije";
 					   status = true;
