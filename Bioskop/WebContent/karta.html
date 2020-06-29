@@ -45,10 +45,25 @@
                 Moj Profil
               </li>
             </a>
-            <a class="nav-opcija" id="nav_login" href="./login.html">
-              <li class="nav-item povecati">
+            <a class="nav-opcija" id="nav_login">
+              <li class="nav-item povecati" id="nav_login_btn">
                 Login
               </li>
+              <div id="nav_login_div">
+              	<span class="hide_logreg">X</span>
+              	<input placeholder="Username..." id="nav_login_div_input_username"/>
+              	<input placeholder="Password..." id="nav_login_div_input_password" type="password"/>
+              	<button id="nav_login_div_loginbtn">Login</button>
+              	<p id="pokaziRegistraciju">Nemate nalog?</p>
+              </div>
+              <div id="nav_reg_div">
+              	<span class="hide_logreg">X</span>
+              	<input placeholder="Username..." id="nav_reg_div_input_username"/>
+              	<input placeholder="Password..." id="nav_reg_div_input_password" type="password"/>
+              	<input placeholder="Ponovi Password..." id="nav_reg_div_input_password2" type="password"/>
+              	<button id="nav_reg_div_regbtn">Registruj</button>
+              	<p id="pokaziLogin">Imate nalog?</p>
+              </div>
             </a>
             <a class="nav-opcija" id="nav_logout" href="#">
               <li class="nav-item povecati">

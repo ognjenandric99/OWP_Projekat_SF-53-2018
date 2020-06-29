@@ -15,11 +15,11 @@ public class ConnectionManager {
 
 	private static final String FILE_SEPARATOR = System.getProperty("file.separator");
 	private static final String WINDOWS_PATH = "C:" + FILE_SEPARATOR + "Users" + FILE_SEPARATOR + "BUDI" + FILE_SEPARATOR +"gitz"+FILE_SEPARATOR+"OWP_Projekat_SF-53-2018"+FILE_SEPARATOR+"Bioskop"+FILE_SEPARATOR+"sql"+FILE_SEPARATOR+ DATABASE_NAME;
-	private static final String WINDOWS_PATH_KOMP = "C:" + FILE_SEPARATOR + "Users" + FILE_SEPARATOR + "ognje" + FILE_SEPARATOR +"git"+FILE_SEPARATOR+"OWP_Projekat_SF-53-2018"+FILE_SEPARATOR+"Bioskop"+FILE_SEPARATOR+"sql"+FILE_SEPARATOR+ DATABASE_NAME;
+	private static final String WINDOWS_PATH_KOMP = "C:" + FILE_SEPARATOR + "Users" + FILE_SEPARATOR + "ognje" + FILE_SEPARATOR +"git"+FILE_SEPARATOR+"OWP"+FILE_SEPARATOR+"Bioskop"+FILE_SEPARATOR+"sql"+FILE_SEPARATOR+ DATABASE_NAME;
 
 	private static final String LINUX_PATH = "SQLite" + FILE_SEPARATOR + DATABASE_NAME;
 
-	private static final String PATH = WINDOWS_PATH;	
+	private static final String PATH = WINDOWS_PATH_KOMP;	
 
 	private static DataSource dataSource;
 

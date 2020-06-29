@@ -205,7 +205,7 @@ select{
 }
 #notificationdiv{
     position: absolute;
-    z-index: 2;
+    z-index: 12;
     right: 0;
     width: 26vw;
     pointer-events: none;
@@ -262,6 +262,7 @@ select{
     border: 2px solid #FF652F;
     border-radius: 10px;
     text-align: center;
+    z-index : 10;
 }
 #nav_login_div input,#nav_reg_div input{
 	margin:15px;

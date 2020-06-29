@@ -36,7 +36,7 @@ $(document).ready(function(){
           var odg = JSON.parse(data);
           console.log(odg);
           if(odg.status){
-            window.location.href="login.html";
+            window.location.href="index.html";
           }
           else{
             pushNotification('red',odg.message);
@@ -44,5 +44,63 @@ $(document).ready(function(){
       });
     })
   }
+  
+  $("#nav_login_div_loginbtn").on('click',function(){
+		var user = $("#nav_login_div_input_username").val();
+		var pass1 = $("#nav_login_div_input_password").val();
+
+		if(user.length>0 && pass1.length>0){
+			var params = {
+					action: "login",
+					username : user,
+					password : pass1
+				}
+				
+				$.post('KorisnikServlet', params, function(data) {
+					var odg = JSON.parse(data);
+					if(odg.status){
+						window.location.href="index.html";
+					}
+					else{
+						pushNotification("red",odg.message);
+					}
+
+			});
+		}
+		else{
+			pushNotification("red","Proverite unos!");
+		}
+	});
+
+  $("#nav_reg_div_regbtn").on('click',function(){
+		var user = $("#nav_reg_div_input_username").val();
+		var pass1 = $("#nav_reg_div_input_password").val();
+		var pass2 = $("#nav_reg_div_input_password2").val();
+
+		if(user.length>0 && pass1==pass2 && pass1.length>0){
+			var params = {
+					action: "registracija",
+					username : user,
+					password : pass1
+				}
+				// kontrola toka se račva na 2 grane
+				$.post('KorisnikServlet', params, function(data) { // u posebnoj programskoj niti se šalje (asinhroni) zahtev
+					// tek kada stigne odgovor izvršiće se ova anonimna funkcija
+					var odg = JSON.parse(data);
+					if(odg.status){
+						window.location.href="index.html";
+					}
+					else{
+						pushNotification('red',odg.message);
+					}
+
+			});
+		}
+		else{
+			pushNotification('red',"Proverite unos");
+			
+		}
+	});
+
   //
 })

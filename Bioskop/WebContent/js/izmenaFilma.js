@@ -66,7 +66,7 @@ $("#izmeniFilm").on('click',function(){
 	var glumci1 = glumci2.split(",").join(";");
 	
 	if(naziv1.length<1 || trajanje1<1 || godina1<1900 || distributer1.length<1 || zemlja1.length<1){
-		alert("Ne valja");
+		pushNotification("alert","Ne valju unosi");
 	}
 	else{
 		var params = {
