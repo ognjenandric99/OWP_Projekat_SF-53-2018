@@ -40,3 +40,22 @@ if(localStorage['poruka']!=undefined){
   pushNotification(boja,msg);
   localStorage.removeItem('poruka');
 }
+
+$(document).ready(function (){
+	$("#nav_login_btn").on("click",function(){
+		$("#nav_login_div").show();
+	});
+	$("#pokaziRegistraciju").on('click',function(){
+		$("#nav_login_div").hide();
+		$("#nav_reg_div").show();
+	});
+	$("#pokaziLogin").on('click',function(){
+		$("#nav_login_div").show();
+		$("#nav_reg_div").hide();
+	});
+	$(".hide_logreg").on('click',function(event){
+		event.preventDefault();
+		$("#nav_reg_div").hide();
+		$("#nav_login_div").hide();
+	})
+});

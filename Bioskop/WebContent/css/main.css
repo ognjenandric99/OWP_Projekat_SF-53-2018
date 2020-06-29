@@ -242,3 +242,40 @@ select{
   border: 5px solid lime;
   box-shadow: 0px 0px 5px lime;
 }
+
+#nav_login{
+	position:relative !important;
+	color:white;
+	transition:0.5s all ease;
+	cursor:pointer;
+}
+#nav_login:hover{
+	color:#FF652F;
+	text-decoration:underline;
+}
+#nav_login_div,#nav_reg_div{
+	display: none;
+    position: absolute;
+    right: 0;
+    padding: 10px;
+    background-color: #0c101e;
+    border: 2px solid #FF652F;
+    border-radius: 10px;
+    text-align: center;
+}
+#nav_login_div input,#nav_reg_div input{
+	margin:15px;
+	padding:2px 5px;
+}
+#nav_login_div button,#nav_reg_div button{
+	background-color : #FF652F;
+	color : white;
+	padding :2px 5px;
+	outline : 0;
+	border-radius : 5px;
+}
+.hide_logreg{
+	position: absolute;
+    font-size: 12px;
+    right: 10px;
+}
